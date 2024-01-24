@@ -164,6 +164,10 @@ namespace NeoCortexApiSample
                 prevActiveCols.Add(input, new int[0]);
             }
 
+            //Implementing dictionary for SDR.
+            Dictionary<int, List<int>> SdrDictionary = new Dictionary<int, List<int>>();
+
+
             // Learning process will take 1000 iterations (cycles)
             int maxSPLearningCycles = 1000;
 
