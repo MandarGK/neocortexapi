@@ -100,6 +100,9 @@ namespace NeoCortexApiSample
 
             bool isInStableState = false;
 
+            // We will added new Parameter in The Output i.e Number of Stable Cycles.
+            int stableCycles = 0;
+
             //
             // HPC extends the default Spatial Pooler algorithm.
             // The purpose of HPC is to set the SP in the new-born stage at the begining of the learning process.
@@ -156,6 +159,7 @@ namespace NeoCortexApiSample
             // Will hold the similarity of SDKk and SDRk-1 fro every input.
             Dictionary<double, double> prevSimilarity = new Dictionary<double, double>();
 
+       
             //
             // Initiaize start similarity to zero.
             foreach (var input in inputs)
@@ -191,7 +195,7 @@ namespace NeoCortexApiSample
 
                     similarity = MathHelpers.CalcArraySimilarity(activeColumns, prevActiveCols[input]);
 
-                    Debug.WriteLine($"[cycle={cycle.ToString("D4")}, i={input}, cols=:{actCols.Length} s={similarity}] SDR: {Helpers.StringifyVector(actCols)}");
+                    Debug.WriteLine($"[cycle={cycle.ToString("D4")},sc={stableCycles}, i={input}, cols=:{actCols.Length} s={similarity}] SDR: {Helpers.StringifyVector(actCols)}");
 
                     prevActiveCols[input] = activeColumns;
                     prevSimilarity[input] = similarity;
