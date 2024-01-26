@@ -3,6 +3,7 @@ using NeoCortexApi.Encoders;
 using NeoCortexApi.Entities;
 using NeoCortexApi.Network;
 using NeoCortexApi.Utility;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -152,6 +153,13 @@ namespace NeoCortexApiSample
             cortexLayer.HtmModules.Add("sp", sp);
 
             double[] inputs = inputValues.ToArray();
+
+            //Understanding the Inout value in Array.
+            foreach(double value in inputs)
+{
+                Console.WriteLine("Inside For each");
+                Console.WriteLine(value);
+            }
 
             // Will hold the SDR of every inputs.
             Dictionary<double, int[]> prevActiveCols = new Dictionary<double, int[]>();
