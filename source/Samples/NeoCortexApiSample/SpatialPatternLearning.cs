@@ -4,9 +4,11 @@ using NeoCortexApi.Entities;
 using NeoCortexApi.Network;
 using NeoCortexApi.Utility;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Xml;
 
 namespace NeoCortexApiSample
 {
@@ -164,6 +166,16 @@ namespace NeoCortexApiSample
                 prevActiveCols.Add(input, new int[0]);
             }
 
+            //Implementing dictionary for SDR.
+            //Dictionary<int, List<int>> SdrDictionary = new Dictionary<int, List<int>>();
+
+            //Adding Key and value pair into created Dictionary
+            //SdrDictionary.Add(input, Helpers.StringifyVector(actCols) );
+            //foreach (var input in inputs)
+            //{
+            //    SdrDictionary.Add(input, { Helpers.StringifyVector(actCols)} );
+            //}
+
             // Learning process will take 1000 iterations (cycles)
             int maxSPLearningCycles = 1000;
 
@@ -190,6 +202,28 @@ namespace NeoCortexApiSample
                     var actCols = activeColumns.OrderBy(c => c).ToArray();
 
                     similarity = MathHelpers.CalcArraySimilarity(activeColumns, prevActiveCols[input]);
+                    
+                    //Creating a Dictionary to store Sdr values.
+                    Dictionary<int, List<int>> SdrDictionary = new Dictionary<int, List<int>>();
+
+                    //Converting the var int[] actcols to List<int>.
+                    List<int> actColsintList = actCols.ToList();
+
+                    //Adding Keys and values to created Dictionary.
+                    SdrDictionary.Add(Convert.ToInt32(input), actColsintList);
+
+                    //Printing the Dictionary for Verification.
+                    foreach (var kvp in SdrDictionary)
+                    {
+                        Console.Write($"Key: {kvp.Key}, SDR: ");
+
+                        foreach (var item in kvp.Value)
+                        {
+                            Console.Write($"{item} ");
+                        }
+
+                        Console.WriteLine();
+                    }
 
                     Debug.WriteLine($"[cycle={cycle.ToString("D4")}, i={input}, cols=:{actCols.Length} s={similarity}] SDR: {Helpers.StringifyVector(actCols)}");
 
