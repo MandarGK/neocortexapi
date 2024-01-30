@@ -27,6 +27,9 @@ namespace NeoCortexApi
     {
         private double m_RequiredSimilarityThreshold;
 
+        /// <summary>
+        /// The Variable is used to track the count of active columns for a specific input pattern over a specified interval
+        /// </summary>
         private int m_MaxPreviousElements = 5;
 
         private Connections m_HtmMemory;
