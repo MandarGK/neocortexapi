@@ -3,6 +3,7 @@ using NeoCortexApi.Encoders;
 using NeoCortexApi.Entities;
 using NeoCortexApi.Network;
 using NeoCortexApi.Utility;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -102,6 +103,9 @@ namespace NeoCortexApiSample
 
             bool isInStableState = false;
 
+            // We will added new Parameter in The Output i.e Number of Stable Cycles.
+            int stableCycles = 0;
+
             //
             // HPC extends the default Spatial Pooler algorithm.
             // The purpose of HPC is to set the SP in the new-born stage at the begining of the learning process.
@@ -152,12 +156,20 @@ namespace NeoCortexApiSample
 
             double[] inputs = inputValues.ToArray();
 
+            //Understanding the Inout value in Array.
+            foreach(double value in inputs)
+{
+                Console.WriteLine("Inside For each");
+                Console.WriteLine(value);
+            }
+
             // Will hold the SDR of every inputs.
             Dictionary<double, int[]> prevActiveCols = new Dictionary<double, int[]>();
 
             // Will hold the similarity of SDKk and SDRk-1 fro every input.
             Dictionary<double, double> prevSimilarity = new Dictionary<double, double>();
 
+       
             //
             // Initiaize start similarity to zero.
             foreach (var input in inputs)
@@ -225,7 +237,7 @@ namespace NeoCortexApiSample
                         Console.WriteLine();
                     }
 
-                    Debug.WriteLine($"[cycle={cycle.ToString("D4")}, i={input}, cols=:{actCols.Length} s={similarity}] SDR: {Helpers.StringifyVector(actCols)}");
+                    Debug.WriteLine($"[cycle={cycle.ToString("D4")},sc={stableCycles}, i={input}, cols=:{actCols.Length} s={similarity}] SDR: {Helpers.StringifyVector(actCols)}");
 
                     prevActiveCols[input] = activeColumns;
                     prevSimilarity[input] = similarity;
