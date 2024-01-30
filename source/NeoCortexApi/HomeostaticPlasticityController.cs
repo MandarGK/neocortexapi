@@ -28,7 +28,9 @@ namespace NeoCortexApi
         private double m_RequiredSimilarityThreshold;
 
         private int m_MaxPreviousElements = 5;
-
+        /// <summary>
+        /// A Memory is created to store configuration paramters used in the experiment.
+        /// </summary>
         private Connections m_HtmMemory;
 
         private int m_Cycle = 0;
