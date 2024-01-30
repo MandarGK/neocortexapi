@@ -34,11 +34,11 @@ namespace NeoCortexApi
 
         private Connections m_HtmMemory;
 
-        ///// <summary>
-        /// This Variable denotes the Current Cycle.
-        /// </summary>
         private int m_Cycle = 0;
-
+        /// <summary>
+        /// The minimum iterations of cycle in Learning phase (i.e., The new born Stage) until HPC algorithm is activated. 
+        /// After reaching this number, boosting in the SP will disabled by HPC. 
+        /// </summary>
         private int m_MinCycles;
 
         /// <summary>
