@@ -31,6 +31,9 @@ namespace NeoCortexApi
 
         private Connections m_HtmMemory;
 
+        ///// <summary>
+        /// This Variable denotes the Current Cycle.
+        /// </summary>
         private int m_Cycle = 0;
 
         private int m_MinCycles;
