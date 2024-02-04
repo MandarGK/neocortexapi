@@ -16,12 +16,12 @@ namespace NeoCortexApiExperiment
 
             int inputBits = 200;
 
-        double max = 100;
+            double max = 100;
 
-        /// <summary>
-        /// Implementing New Parameter in Dictionary for Scalar Encoder. 
-        /// </summary>
-        Dictionary<string, object> settings = new Dictionary<string, object>()
+            /// <summary>
+            /// Implementing New Parameter in Dictionary for Scalar Encoder. 
+            /// </summary>
+            Dictionary<string, object> settings = new Dictionary<string, object>()
             {
                 { "W", 5},
                 { "N", inputBits},
