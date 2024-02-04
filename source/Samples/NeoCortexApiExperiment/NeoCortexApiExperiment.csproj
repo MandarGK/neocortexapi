@@ -7,4 +7,11 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\GridCell\GridCell.csproj" />
+    <ProjectReference Include="..\..\NeoCortexApi\NeoCortexApi.csproj" />
+    <ProjectReference Include="..\..\NeoCortexEntities\NeoCortexEntities.csproj" />
+    <ProjectReference Include="..\..\NeoCortexUtils\NeoCortexUtils.csproj" />
+  </ItemGroup>
+
 </Project>
