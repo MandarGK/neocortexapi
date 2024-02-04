@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NeoCortexApi.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,7 +14,7 @@ namespace NeoCortexApiExperiment
     {
         public void Run ()
         {
-
+            Console.WriteLine($"NeocortexApi! New Spatial Learning Experiment {nameof(SpatialLearningExperiment)}");
             int inputBits = 200;
 
             double max = 100;
@@ -32,6 +33,16 @@ namespace NeoCortexApiExperiment
                 { "ClipInput", false},
                 { "MaxVal", max}
             };
-        }
+
+            HtmConfig cfg = new HtmConfig(new int[] { inputBits }, new int[] { 1024 })
+            {
+                GlobalInhibition = false,
+                NumActiveColumnsPerInhArea = 0.02 * 1024,
+                PotentialRadius = (int)(0.15 * inputBits),
+                LocalAreaDensity = -1,
+                ActivationThreshold = 10,
+
+
+            };
     }
 }
