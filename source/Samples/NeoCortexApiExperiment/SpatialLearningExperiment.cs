@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 namespace NeoCortexApiExperiment
 {
     /// <summary>
-    /// Implementng a new experiment which demonstrates Spatial pattern learining.
+    /// Implementng a new experiment that demonstrates Spatial pattern learining.
     /// </summary>
-    internal class SpatialLearningExperiment
+    public class SpatialLearningExperiment
     {
         public void Run ()
         {
