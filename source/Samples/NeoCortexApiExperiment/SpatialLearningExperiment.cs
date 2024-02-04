@@ -11,7 +11,12 @@ namespace NeoCortexApiExperiment
     /// </summary>
     internal class SpatialLearningExperiment
     {
+        public void Run ()
+        {
 
+            int inputBits = 200;
+
+        double max = 100;
 
         /// <summary>
         /// Implementing New Parameter in Dictionary for Scalar Encoder. 
@@ -19,13 +24,14 @@ namespace NeoCortexApiExperiment
         Dictionary<string, object> settings = new Dictionary<string, object>()
             {
                 { "W", 5},
-                { "N", 200},
+                { "N", inputBits},
                 { "Radius", -1.0},
                 { "MinVal", 0.0},
                 { "Periodic", false},
                 { "Name", "scalar"},
                 { "ClipInput", false},
-                { "MaxVal", 100}
+                { "MaxVal", max}
             };
+        }
     }
 }
