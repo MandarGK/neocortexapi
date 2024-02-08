@@ -1,4 +1,5 @@
-﻿using NeoCortexApi.Encoders;
+﻿using NeoCortexApi;
+using NeoCortexApi.Encoders;
 using NeoCortexApi.Entities;
 using System;
 using System.Collections.Generic;
@@ -26,6 +27,9 @@ namespace NeoCortexApiExperiment
             double minOctOverlapCycles = 1.0;
             double maxBoost = 5.0;
 
+            // Using the Mini Columns we will create a slice of neocortex.
+            int numColumns = 1024;
+
 
             /// <summary>
             /// Implementing New Parameter in Dictionary for Scalar Encoder. 
@@ -42,7 +46,7 @@ namespace NeoCortexApiExperiment
                 { "MaxVal", max}
             };
 
-            HtmConfig cfg = new HtmConfig(new int[] { inputBits }, new int[] { 1024 })
+            HtmConfig cfg = new HtmConfig(new int[] { inputBits }, new int[] { numColumns })
             {
                 CellsPerColumn = 10,
                 MaxBoost = maxBoost,
@@ -51,10 +55,14 @@ namespace NeoCortexApiExperiment
 
 
                 GlobalInhibition = false,
-                NumActiveColumnsPerInhArea = 0.02 * 1024,
+                NumActiveColumnsPerInhArea = 0.02 * numColumns,
                 PotentialRadius = (int)(0.15 * inputBits),
                 LocalAreaDensity = -1,
                 ActivationThreshold = 10,
+
+                MaxSynapsesPerSegment = (int)(0.01 * numColumns),
+                Random = new ThreadSafeRandom(42),
+                StimulusThreshold = 10,
 
 
             };
