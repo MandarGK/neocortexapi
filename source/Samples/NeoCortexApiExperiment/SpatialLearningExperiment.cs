@@ -1,4 +1,5 @@
-﻿using NeoCortexApi.Entities;
+﻿using NeoCortexApi.Encoders;
+using NeoCortexApi.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -57,5 +58,8 @@ namespace NeoCortexApiExperiment
 
 
             };
-    }
+
+            //Implementing a encoder for this experiment
+            EncoderBase encoder = new ScalarEncoder(settings);
+        }
 }
