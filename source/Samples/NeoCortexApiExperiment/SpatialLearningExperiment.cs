@@ -19,6 +19,13 @@ namespace NeoCortexApiExperiment
 
             double max = 100;
 
+
+            // Adding some parameter boosting Parameters 
+          
+            double minOctOverlapCycles = 1.0;
+            double maxBoost = 5.0;
+
+
             /// <summary>
             /// Implementing New Parameter in Dictionary for Scalar Encoder. 
             /// </summary>
@@ -36,6 +43,12 @@ namespace NeoCortexApiExperiment
 
             HtmConfig cfg = new HtmConfig(new int[] { inputBits }, new int[] { 1024 })
             {
+                CellsPerColumn = 10,
+                MaxBoost = maxBoost,
+                DutyCyclePeriod = 100,
+                MinPctOverlapDutyCycles = minOctOverlapCycles,
+
+
                 GlobalInhibition = false,
                 NumActiveColumnsPerInhArea = 0.02 * 1024,
                 PotentialRadius = (int)(0.15 * inputBits),
