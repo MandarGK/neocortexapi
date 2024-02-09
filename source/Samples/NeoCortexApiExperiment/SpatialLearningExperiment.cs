@@ -77,6 +77,17 @@ namespace NeoCortexApiExperiment
             {
                 inputValues.Add((double)i);
             }
+
+            var sp = RunExperiment(cfg, encoder, inputValues);
+        }
+
+        private static SpatialPooler RunExperiment(HtmConfig cfg, EncoderBase encoder, List<double> inputValues)
+        {
+            
+            SpatialPooler sp = new SpatialPooler();
+
+            return sp;
         }
     }
+
 }
