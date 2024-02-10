@@ -83,7 +83,7 @@ namespace NeoCortexApiExperiment
 
         private static SpatialPooler RunExperiment(HtmConfig cfg, EncoderBase encoder, List<double> inputValues)
         {
-            
+            //Creating the instance of Spatial Pooler Multithreaded version
             SpatialPooler sp = new SpatialPooler();
 
             return sp;
