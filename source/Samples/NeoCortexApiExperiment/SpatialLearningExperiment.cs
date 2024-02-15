@@ -74,8 +74,13 @@ namespace NeoCortexApiExperiment
 
         private static SpatialPooler RunExperiment(HtmConfig cfg, EncoderBase encoder, List<double> inputValues)
         {
+            var mem = new Connections(cfg);
+
             //Creating the instance of Spatial Pooler Multithreaded version
             SpatialPooler sp = new SpatialPooler();
+
+            //Initalizes the Spatial pooler
+            sp.Init(mem, new DistributedMemory() { ColumnDictionary = new InMemoryDistributedDictionary<int, NeoCortexApi.Entities.Column>(1) });
 
             return sp;
         }
