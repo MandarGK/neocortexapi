@@ -14,16 +14,16 @@ namespace NeoCortexApiExperiment
     /// </summary>
     public class SpatialLearningExperiment
     {
-        public void Run()
+        public void Run ()
         {
             Console.WriteLine($"NeocortexApi! New Spatial Learning Experiment {nameof(SpatialLearningExperiment)}");
-            int inputBits = 200;
+            int inputBits = 200;    
 
             double max = 100;
 
 
             // Adding some parameter boosting Parameters 
-
+          
             double minOctOverlapCycles = 1.0;
             double maxBoost = 5.0;
 
@@ -69,17 +69,8 @@ namespace NeoCortexApiExperiment
 
             //Implementing a encoder for this experiment
             EncoderBase encoder = new ScalarEncoder(settings);
-
-            //Creating 100 random input values.
-            List<double> inputValues = new List<double>();
-
-            for (int i = 0; i < (int)max; i++)
-            {
-                inputValues.Add((double)i);
-            }
-
-            var sp = RunExperiment(cfg, encoder, inputValues);
         }
+
 
         private static SpatialPooler RunExperiment(HtmConfig cfg, EncoderBase encoder, List<double> inputValues)
         {
@@ -91,3 +82,4 @@ namespace NeoCortexApiExperiment
     }
 
 }
+
