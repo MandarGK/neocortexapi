@@ -83,8 +83,11 @@ namespace NeoCortexApiExperiment
             //Initalizes the Spatial pooler
             sp.Init(mem, new DistributedMemory() { ColumnDictionary = new InMemoryDistributedDictionary<int, NeoCortexApi.Entities.Column>(1) });
 
-            //Implmenting Layers for Neocortex.
+            //Implementing Layers for Neocortex.
             CortexLayer<object, object> cortexLayer = new CortexLayer<object, object>("L1");
+
+            // Encoder will receive the input and forward the encoded signal to the next module.
+            cortexLayer.HtmModules.Add("encoder", encoder);
 
             return sp;
         }
