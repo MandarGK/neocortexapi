@@ -10,5 +10,8 @@ Project Description:-
 - Since the Experiment runs to its Pre-Defined 1000 Cycles But the Stable state is achieved before reaching the 1000th Cycle. Here, Stability is set to TRUE after attaining 50 stable cycles.
 - We have to build a New Logic to Compare the SDRs of two consecutive cycles in appropriate manner so that it should take a set of Min Cycles to achieve the Stable State.
 - Once the stable state is achieved, we have to set a condition to exit.
--
+Spatial Pooler:
+- The HTM system consists of an encoder, the HTM spatial pooler, the HTM temporal memory, and an SDR classifier.
+- The HTM spatial pooler represents a learning algorithm for creating sparse representations from noisy data streams in an online fashion. It models how neurons learn feedforward connections and form efficient representations of the input. 
+- It converts arbitrary binary input patterns into sparse distributed representations (SDR) using homeostatic excitability control.
 
