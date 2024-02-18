@@ -85,6 +85,8 @@ namespace NeoCortexApiExperiment
         {
             var mem = new Connections(cfg);
 
+            
+
             //Creating the instance of Spatial Pooler Multithreaded version
             SpatialPooler sp = new SpatialPooler();
 
@@ -96,6 +98,9 @@ namespace NeoCortexApiExperiment
 
             // Encoder will receive the input and forward the encoded signal to the next module.
             cortexLayer.HtmModules.Add("encoder", encoder);
+
+            // This Module will use the Output From Encoder and Build Spare Distributed Representation.
+            cortexLayer.HtmModules.Add("sp", sp);
 
             return sp;
         }
