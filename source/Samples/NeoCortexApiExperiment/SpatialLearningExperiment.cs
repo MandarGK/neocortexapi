@@ -70,6 +70,14 @@ namespace NeoCortexApiExperiment
 
             //Implementing a encoder for this experiment
             EncoderBase encoder = new ScalarEncoder(settings);
+
+            //Creating 100 random variables as input
+            List<double> inputValues = new List<double>();
+
+            for (int i = 0; i < (int)max; i++)
+            {
+                inputValues.Add((double)i);
+            }
         }
 
 
