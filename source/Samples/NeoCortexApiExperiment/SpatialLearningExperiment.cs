@@ -78,6 +78,8 @@ namespace NeoCortexApiExperiment
             {
                 inputValues.Add((double)i);
             }
+
+            var sp = RunExperiment(cfg, encoder, inputValues);
         }
 
 
