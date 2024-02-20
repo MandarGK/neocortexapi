@@ -104,6 +104,9 @@ namespace NeoCortexApiExperiment
             // This Module will use the Output From Encoder and Build Spare Distributed Representation.
             cortexLayer.HtmModules.Add("sp", sp);
 
+            //Implementing New Method for Boosting
+            HomeostaticPlasticityController hpa = new HomeostaticPlasticityController() { };
+
             return sp;
         }
     }
