@@ -78,12 +78,16 @@ namespace NeoCortexApiExperiment
             {
                 inputValues.Add((double)i);
             }
+
+            var sp = RunExperiment(cfg, encoder, inputValues);
         }
 
 
         private static SpatialPooler RunExperiment(HtmConfig cfg, EncoderBase encoder, List<double> inputValues)
         {
             var mem = new Connections(cfg);
+
+            
 
             //Creating the instance of Spatial Pooler Multithreaded version
             SpatialPooler sp = new SpatialPooler();
@@ -96,6 +100,12 @@ namespace NeoCortexApiExperiment
 
             // Encoder will receive the input and forward the encoded signal to the next module.
             cortexLayer.HtmModules.Add("encoder", encoder);
+
+            // This Module will use the Output From Encoder and Build Spare Distributed Representation.
+            cortexLayer.HtmModules.Add("sp", sp);
+
+            //Implementing New Method for Boosting
+            HomeostaticPlasticityController hpa = new HomeostaticPlasticityController() { };
 
             return sp;
         }
