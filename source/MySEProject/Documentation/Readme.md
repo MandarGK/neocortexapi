@@ -17,3 +17,4 @@ Spatial Pooler:
 encodes the set of semantic attributes of what is being represented. The bits are not labeled (that is to say, no one assigns meanings to the bits), but rather, the semantic meanings of bits are learned. If two SDRs have active bits in the same locations, they share the semantic attributes represented by those bits.
 - It converts arbitrary binary input patterns into sparse distributed representations (SDR) using homeostatic excitability control.
 - We need learning in Spatial Pooler because if inputs are random, an untrained random Spatial pooler will do just as good as any trained Spatial Pooler.
+- However, real inputs are structured. Input SDRs occur with non-equal probabilities.
