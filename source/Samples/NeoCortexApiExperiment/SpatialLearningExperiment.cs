@@ -87,7 +87,8 @@ namespace NeoCortexApiExperiment
         {
             var mem = new Connections(cfg);
 
-            
+            bool isInStableState = false;
+
 
             //Creating the instance of Spatial Pooler Multithreaded version
             SpatialPooler sp = new SpatialPooler();
