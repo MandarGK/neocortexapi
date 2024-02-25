@@ -120,6 +120,7 @@ namespace NeoCortexApiExperiment
                     else
                     {
                         Debug.WriteLine($"STABLE STATE");
+                        //Entering in to Stable State
                         isInStableState = true;
                     }
                      
