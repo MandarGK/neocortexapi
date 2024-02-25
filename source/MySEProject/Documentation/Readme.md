@@ -14,4 +14,5 @@ Spatial Pooler:
 - The HTM system consists of an encoder, the HTM spatial pooler, the HTM temporal memory, and an SDR classifier.
 - The HTM spatial pooler represents a learning algorithm for creating sparse representations from noisy data streams in an online fashion. It models how neurons learn feedforward connections and form efficient representations of the input. 
 - It converts arbitrary binary input patterns into sparse distributed representations (SDR) using homeostatic excitability control.
-
+SDR:
+- SDRs are not moved around in memory, like data in computers.
