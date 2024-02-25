@@ -114,7 +114,8 @@ namespace NeoCortexApiExperiment
                     if (isStable == false)
                     {
                         Debug.WriteLine($"INSTABLE STATE");
-                        
+                       
+                        isInStableState = false;
                     }
                 });
 
