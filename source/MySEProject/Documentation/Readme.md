@@ -15,4 +15,4 @@ Spatial Pooler:
 - The HTM spatial pooler represents a learning algorithm for creating sparse representations from noisy data streams in an online fashion. It models how neurons learn feedforward connections and form efficient representations of the input. 
 - It converts arbitrary binary input patterns into sparse distributed representations (SDR) using homeostatic excitability control.
 SDR:
-- SDRs are not moved around in memory, like data in computers.
+- SDRs are not moved around in memory, like data in computers. Instead the set of active neurons, within a fixed population of neurons, changes over time.
