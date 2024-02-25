@@ -4,6 +4,7 @@ using NeoCortexApi.Entities;
 using NeoCortexApi.Network;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -106,7 +107,16 @@ namespace NeoCortexApiExperiment
             cortexLayer.HtmModules.Add("sp", sp);
 
             //Implementing New Method for Boosting
-            HomeostaticPlasticityController hpa = new HomeostaticPlasticityController() { };
+            HomeostaticPlasticityController hpa = new HomeostaticPlasticityController(mem, inputValues.Count * 40,
+                (isStable, numPatterns, actColAvg, seenInputs) => {
+
+
+                    if (isStable == false)
+                    {
+                        Debug.WriteLine($"INSTABLE STATE");
+                        
+                    }
+                });
 
             return sp;
         }
