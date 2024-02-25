@@ -196,7 +196,15 @@ namespace NeoCortexApiSample
             for (int cycle = 0; cycle < maxSPLearningCycles; cycle++)
             {
                 Debug.WriteLine($"Cycle  ** {cycle} ** Stability: {isInStableState}");
+                if (isInStableState = true)
+                {
+                    stableCycles++;
+                }
 
+                else
+                {
+                    stableCycles = 0;
+                }
                 //
                 // This trains the layer on input pattern.
                 foreach (var input in inputs)
