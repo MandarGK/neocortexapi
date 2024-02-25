@@ -13,7 +13,14 @@ Project Description:-
 Spatial Pooler:
 - The HTM system consists of an encoder, the HTM spatial pooler, the HTM temporal memory, and an SDR classifier.
 - The HTM spatial pooler represents a learning algorithm for creating sparse representations from noisy data streams in an online fashion. It models how neurons learn feedforward connections and form efficient representations of the input. 
+- An SDR consists of thousands of bits where at any point in time a small percentage of the bits are 1’s and the rest are 0’s. The bits in an SDR correspond to neurons in the brain, a 1 being a relatively active neuron and a 0 being a relatively inactive neuron. The most important property of SDRs is that each bit has meaning. Therefore, the set of active bits in any particular representation
+encodes the set of semantic attributes of what is being represented. The bits are not labeled (that is to say, no one assigns meanings to the bits), but rather, the semantic meanings of bits are learned. If two SDRs have active bits in the same locations, they share the semantic attributes represented by those bits.
 - It converts arbitrary binary input patterns into sparse distributed representations (SDR) using homeostatic excitability control.
+<<<<<<< HEAD
 SDR:
 - SDRs are not moved around in memory, like data in computers. Instead the set of active neurons, within a fixed population of neurons, changes over time.
 - At one moment a set of neurons represents one thing; the next moment it represents something else.
+=======
+- We need learning in Spatial Pooler because if inputs are random, an untrained random Spatial pooler will do just as good as any trained Spatial Pooler.
+- However, real inputs are structured. Input SDRs occur with non-equal probabilities.
+>>>>>>> 2631bcad59d717d3b03b8c2d3fc1590d42001585

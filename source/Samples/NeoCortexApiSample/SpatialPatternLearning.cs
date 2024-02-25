@@ -196,7 +196,17 @@ namespace NeoCortexApiSample
             for (int cycle = 0; cycle < maxSPLearningCycles; cycle++)
             {
                 Debug.WriteLine($"Cycle  ** {cycle} ** Stability: {isInStableState}");
+                
+                //Counter to display the number of stable cycles
+                if (isInStableState = true)
+                {
+                    stableCycles++;
+                }
 
+                else
+                {
+                    stableCycles = 0;
+                }
                 //
                 // This trains the layer on input pattern.
                 foreach (var input in inputs)
@@ -243,13 +253,13 @@ namespace NeoCortexApiSample
                     prevSimilarity[input] = similarity;
                 }
 
-                if (isInStableState)
-                {
-                    numStableCycles++;
-                }
+                //if (isInStableState)
+                //{
+                //    numStableCycles++;
+                //}
 
-                if (numStableCycles > 5)
-                    break;
+                //if (numStableCycles > 5)
+                //    break;
             }
 
             return sp;
