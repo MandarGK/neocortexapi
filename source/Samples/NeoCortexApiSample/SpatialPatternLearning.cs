@@ -196,6 +196,8 @@ namespace NeoCortexApiSample
             for (int cycle = 0; cycle < maxSPLearningCycles; cycle++)
             {
                 Debug.WriteLine($"Cycle  ** {cycle} ** Stability: {isInStableState}");
+                
+                //Counter to display the number of stable cycles
                 if (isInStableState = true)
                 {
                     stableCycles++;
