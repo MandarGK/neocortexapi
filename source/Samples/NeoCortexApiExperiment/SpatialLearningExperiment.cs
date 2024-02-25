@@ -117,6 +117,11 @@ namespace NeoCortexApiExperiment
                         //This should usually not happen
                         isInStableState = false;
                     }
+                    else
+                    {
+                        isInStableState = true;
+                    }
+                     
                 });
 
             return sp;
