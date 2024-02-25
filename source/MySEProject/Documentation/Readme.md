@@ -22,4 +22,4 @@ SDR:
 - SDRs are not moved around in memory, like data in computers. Instead the set of active neurons, within a fixed population of neurons, changes over time.
 - At one moment a set of neurons represents one thing; the next moment it represents something else.
 - Within one set of neurons, an SDR at one point in time can associatively link to the next occurring SDR. In this way, sequences of SDRs are learned. 
-
+- Associative linking also occurs between different populations of cells (layer to layer or region to region).
