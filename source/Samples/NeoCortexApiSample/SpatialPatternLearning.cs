@@ -243,13 +243,13 @@ namespace NeoCortexApiSample
                     prevSimilarity[input] = similarity;
                 }
 
-                if (isInStableState)
-                {
-                    numStableCycles++;
-                }
+                //if (isInStableState)
+                //{
+                //    numStableCycles++;
+                //}
 
-                if (numStableCycles > 5)
-                    break;
+                //if (numStableCycles > 5)
+                //    break;
             }
 
             return sp;
