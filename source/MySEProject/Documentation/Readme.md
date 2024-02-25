@@ -16,3 +16,4 @@ Spatial Pooler:
 - It converts arbitrary binary input patterns into sparse distributed representations (SDR) using homeostatic excitability control.
 SDR:
 - SDRs are not moved around in memory, like data in computers. Instead the set of active neurons, within a fixed population of neurons, changes over time.
+- At one moment a set of neurons represents one thing; the next moment it represents something else.
