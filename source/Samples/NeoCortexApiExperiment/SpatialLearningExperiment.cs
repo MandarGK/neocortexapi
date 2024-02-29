@@ -126,6 +126,9 @@ namespace NeoCortexApiExperiment
                      
                 });
 
+            //Intitializing the Counter..
+            int counter = 0;
+
             return sp;
         }
     }
