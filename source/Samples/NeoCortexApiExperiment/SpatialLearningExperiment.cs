@@ -123,11 +123,21 @@ namespace NeoCortexApiExperiment
                         //Entering in to Stable State
                         isInStableState = true;
                     }
-                     
+
                 });
 
             //Intitializing the Counter..
             int counter = 0;
+
+            if (isInStableState == true)
+            {
+                // Increasing Counter Value.
+                counter++;
+
+            }
+            
+
+
 
             return sp;
         }
