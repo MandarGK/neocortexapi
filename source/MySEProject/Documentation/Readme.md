@@ -16,6 +16,7 @@ Spatial Pooler:
 - An SDR consists of thousands of bits where at any point in time a small percentage of the bits are 1’s and the rest are 0’s. The bits in an SDR correspond to neurons in the brain, a 1 being a relatively active neuron and a 0 being a relatively inactive neuron. The most important property of SDRs is that each bit has meaning. Therefore, the set of active bits in any particular representation
 encodes the set of semantic attributes of what is being represented. The bits are not labeled (that is to say, no one assigns meanings to the bits), but rather, the semantic meanings of bits are learned. If two SDRs have active bits in the same locations, they share the semantic attributes represented by those bits.
 - It converts arbitrary binary input patterns into sparse distributed representations (SDR) using homeostatic excitability control.
+- The output of the Spatial Pooler represents the mini columns i.e., the pyramidal neuron in the cortices.
 - We need learning in Spatial Pooler because if inputs are random, an untrained random Spatial pooler will do just as good as any trained Spatial Pooler.
 - However, real inputs are structured. Input SDRs occur with non-equal probabilities.
 SDR:
@@ -23,3 +24,4 @@ SDR:
 - At one moment a set of neurons represents one thing; the next moment it represents something else.
 - Within one set of neurons, an SDR at one point in time can associatively link to the next occurring SDR. In this way, sequences of SDRs are learned. 
 - Associative linking also occurs between different populations of cells (layer to layer or region to region).
+- Because the binary representation is more biologically reasonable and highly computationally efficient, HTM considers the binary SDR converted from a specific encoder. Even though the number of possible inputs exceeds the number of possible representations, the binary SDR does not result in a functional loss of information due to the critical features of the SDR.
