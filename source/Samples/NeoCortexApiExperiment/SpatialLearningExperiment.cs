@@ -106,6 +106,10 @@ namespace NeoCortexApiExperiment
             // This Module will use the Output From Encoder and Build Spare Distributed Representation.
             cortexLayer.HtmModules.Add("sp", sp);
 
+            // Will hold the SDR of every inputs.
+            Dictionary<double, int[]> prevActiveCols = new Dictionary<double, int[]>();
+
+
             //Implementing New Method for Boosting
             HomeostaticPlasticityController hpa = new HomeostaticPlasticityController(mem, inputValues.Count * 40,
                 (isStable, numPatterns, actColAvg, seenInputs) => {
