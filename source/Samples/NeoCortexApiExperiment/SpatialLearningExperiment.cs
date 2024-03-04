@@ -109,6 +109,9 @@ namespace NeoCortexApiExperiment
             // Will hold the SDR of every inputs.
             Dictionary<double, int[]> prevActiveCols = new Dictionary<double, int[]>();
 
+            // Will hold the similarity of SDKk and SDRk - 1 fro every input.
+            Dictionary<double, double> prevSimilarity = new Dictionary<double, double>();
+
 
             //Implementing New Method for Boosting
             HomeostaticPlasticityController hpa = new HomeostaticPlasticityController(mem, inputValues.Count * 40,
