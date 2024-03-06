@@ -64,7 +64,7 @@ namespace NeoCortexApiExperiment
 
                 MaxSynapsesPerSegment = (int)(0.01 * numColumns),
                 Random = new ThreadSafeRandom(42),
-                StimulusThreshold = 10,
+                StimulusThreshold = 0.5,
 
 
             };
@@ -103,7 +103,7 @@ namespace NeoCortexApiExperiment
             // Encoder will receive the input and forward the encoded signal to the next module.
             cortexLayer.HtmModules.Add("encoder", encoder);
 
-            // This Module will use the Output From Encoder and Build Spare Distributed Representation.
+            // This Module will use the Output From Encoder and Build Sparse Distributed Representation.
             cortexLayer.HtmModules.Add("sp", sp);
 
             // Will hold the SDR of every inputs.
