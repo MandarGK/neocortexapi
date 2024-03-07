@@ -98,11 +98,12 @@ namespace NeoCortexApi.Entities
             {
                 SliceError(coordinates);
             }
+            
             // Print the contents of the slice---anushruth
-            PrintArray((Array)slice, coordinates[0]);
+            //PrintArray((Array)slice, coordinates[0]);
             return slice;
         }
-
+/*
         private void PrintArray(Array array, int cycleNumber)
         {
             Console.WriteLine($"Indices where 1 is present in Slice for Cycle {cycleNumber}:");
@@ -117,7 +118,7 @@ namespace NeoCortexApi.Entities
 
             Console.WriteLine();
         }
-
+*/
         /// <summary>
         /// Gets the access to a row inside of multidimensional array.
         /// </summary>
