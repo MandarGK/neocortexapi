@@ -30,7 +30,28 @@ Solution:
 
 1. The SDRs of all inputs are implemented in the form of dictionary as follows,
     for (int cycle = 0; cycle < maxSPLearningCycles; cycle++)
+    
     {
-         Dictionary<int, List<int>> SdrDictionary = new Dictionary<int, List<int>>();
+
+        Dictionary<int, List<int>> SdrDictionary = new Dictionary<int, List<int>>();
          SdrDictionary.Add(input, { Helpers.StringifyVector(actCols)} );
          Console.WriteLine("Printing the dictionary:");
+          foreach(var kvp in SdrDictionary)
+                 {
+                     Console.Write($"Key: {kvp.Key}, Values: [");
+         
+                     // Printing the elements of the List<int>
+                     for (int i = 0; i < kvp.Value.Count; i++)
+                     {
+                         Console.Write($"{kvp.Value[i]}");
+                         if (i < kvp.Value.Count - 1)
+                         {
+                             Console.Write(", ");
+                         }
+                     }
+         
+                    Console.WriteLine("]");
+         
+                 }
+    }
+         
