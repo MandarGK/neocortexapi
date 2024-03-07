@@ -25,3 +25,12 @@ SDR:
 - Within one set of neurons, an SDR at one point in time can associatively link to the next occurring SDR. In this way, sequences of SDRs are learned. 
 - Associative linking also occurs between different populations of cells (layer to layer or region to region).
 - Because the binary representation is more biologically reasonable and highly computationally efficient, HTM considers the binary SDR converted from a specific encoder. Even though the number of possible inputs exceeds the number of possible representations, the binary SDR does not result in a functional loss of information due to the critical features of the SDR.
+
+Solution:
+
+1. The SDRs of all inputs are implemented in the form of dictionary as follows,
+    for (int cycle = 0; cycle < maxSPLearningCycles; cycle++)
+    {
+         Dictionary<int, List<int>> SdrDictionary = new Dictionary<int, List<int>>();
+         SdrDictionary.Add(input, { Helpers.StringifyVector(actCols)} );
+         Console.WriteLine("Printing the dictionary:");
