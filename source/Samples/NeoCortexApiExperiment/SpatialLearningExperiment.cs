@@ -90,6 +90,32 @@ namespace NeoCortexApiExperiment
 
             bool isInStableState = false;
 
+            //Implementing New Method for Boosting
+            // HPC extends the default Spatial Pooler algorithm.
+            // The purpose of HPC is to set the SP in the new-born stage at the begining of the learning process.
+            // In this stage the boosting is very active, but the SP behaves instable. After this stage is over
+            // (defined by the second argument) the HPC is controlling the learning process of the SP.
+            // Once the SDR generated for every input gets stable, the HPC will fire event that notifies your code
+            // that SP is stable now.
+            HomeostaticPlasticityController hpa = new HomeostaticPlasticityController(mem, inputValues.Count * 40,
+                (isStable, numPatterns, actColAvg, seenInputs) => {
+
+
+                    if (isStable == false)
+                    {
+                        Debug.WriteLine($"INSTABLE STATE");
+                        //This should usually not happen
+                        isInStableState = false;
+                    }
+                    else
+                    {
+                        Debug.WriteLine($"STABLE STATE");
+                        //Entering in to Stable State
+                        isInStableState = true;
+                    }
+
+                });
+
 
             //Creating the instance of Spatial Pooler Multithreaded version
             SpatialPooler sp = new SpatialPooler();
@@ -111,27 +137,6 @@ namespace NeoCortexApiExperiment
 
             // Will hold the similarity of SDKk and SDRk - 1 fro every input.
             Dictionary<double, double> prevSimilarity = new Dictionary<double, double>();
-
-
-            //Implementing New Method for Boosting
-            HomeostaticPlasticityController hpa = new HomeostaticPlasticityController(mem, inputValues.Count * 40,
-                (isStable, numPatterns, actColAvg, seenInputs) => {
-
-
-                    if (isStable == false)
-                    {
-                        Debug.WriteLine($"INSTABLE STATE");
-                        //This should usually not happen
-                        isInStableState = false;
-                    }
-                    else
-                    {
-                        Debug.WriteLine($"STABLE STATE");
-                        //Entering in to Stable State
-                        isInStableState = true;
-                    }
-
-                });
 
             //Intitializing the Counter..
             int counter = 0;
