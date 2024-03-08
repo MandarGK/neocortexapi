@@ -64,7 +64,7 @@ namespace NeoCortexApiExperiment
 
                 MaxSynapsesPerSegment = (int)(0.01 * numColumns),
                 Random = new ThreadSafeRandom(42),
-                StimulusThreshold = 10,
+                StimulusThreshold = 0.5,
 
 
             };
@@ -103,8 +103,15 @@ namespace NeoCortexApiExperiment
             // Encoder will receive the input and forward the encoded signal to the next module.
             cortexLayer.HtmModules.Add("encoder", encoder);
 
-            // This Module will use the Output From Encoder and Build Spare Distributed Representation.
+            // This Module will use the Output From Encoder and Build Sparse Distributed Representation.
             cortexLayer.HtmModules.Add("sp", sp);
+
+            // Will hold the SDR of every inputs.
+            Dictionary<double, int[]> prevActiveCols = new Dictionary<double, int[]>();
+
+            // Will hold the similarity of SDKk and SDRk - 1 fro every input.
+            Dictionary<double, double> prevSimilarity = new Dictionary<double, double>();
+
 
             //Implementing New Method for Boosting
             HomeostaticPlasticityController hpa = new HomeostaticPlasticityController(mem, inputValues.Count * 40,
