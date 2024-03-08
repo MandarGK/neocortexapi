@@ -112,6 +112,14 @@ namespace NeoCortexApiExperiment
             // Will hold the similarity of SDKk and SDRk - 1 fro every input.
             Dictionary<double, double> prevSimilarity = new Dictionary<double, double>();
 
+            double[] inputs = inputValues.ToArray();
+
+            // Initiaize start similarity to zero.
+            foreach (var input in inputs)
+            {
+                prevSimilarity.Add(input, 0.0);
+                prevActiveCols.Add(input, new int[0]);
+            }
 
             //Implementing New Method for Boosting
             HomeostaticPlasticityController hpa = new HomeostaticPlasticityController(mem, inputValues.Count * 40,
@@ -143,7 +151,7 @@ namespace NeoCortexApiExperiment
 
             }
             
-
+                
 
 
             return sp;
