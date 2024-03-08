@@ -132,6 +132,15 @@ namespace NeoCortexApiExperiment
             // This Module will use the Output From Encoder and Build Sparse Distributed Representation.
             cortexLayer.HtmModules.Add("sp", sp);
 
+            double[] inputs = inputValues.ToArray();
+
+            //Understanding the Input value in Array.
+            foreach (double value in inputs)
+            {
+                Console.WriteLine("Inside For each");
+                Console.WriteLine(value);
+            }
+
             // Will hold the SDR of every inputs.
             Dictionary<double, int[]> prevActiveCols = new Dictionary<double, int[]>();
 
