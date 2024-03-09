@@ -54,4 +54,7 @@ Solution:
          
                  }
     }
-         
+2. During learning time, the Spatial Pooler creates different SDRs for the same input and after sometime it keeps the SDR stable.
+   To ensure there is no SDR change is detected (instable state) after the stable state is set to true, we have implemented the following,
+   (.) By modifying the "No.of stable cycles to wait on change"
+   (.) By modifying the Similarity threshold.
