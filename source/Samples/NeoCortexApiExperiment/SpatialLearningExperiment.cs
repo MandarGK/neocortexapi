@@ -147,7 +147,14 @@ namespace NeoCortexApiExperiment
             // Will hold the similarity of SDKk and SDRk - 1 fro every input.
             Dictionary<double, double> prevSimilarity = new Dictionary<double, double>();
 
-            
+            //Initialize start similarity to zero.
+            foreach (var input in inputs)
+            {
+                prevSimilarity.Add(input, 0.0);
+                prevActiveCols.Add(input, new int[0]);
+            }
+
+
 
             //Intitializing the Counter..
             int counter = 0;
