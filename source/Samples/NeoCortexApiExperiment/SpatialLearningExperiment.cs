@@ -150,11 +150,18 @@ namespace NeoCortexApiExperiment
                 counter++;
 
             }
-            
-                
+
+            //Learning process will take 1000 iterations(cycles)
+            int maxSPLearningCycles = 1000;
+
+            int numStableCycles = 0;
+
+            for (int cycle = 0; cycle < maxSPLearningCycles; cycle++)
+            {
+            }
 
 
-            return sp;
+                return sp;
         }
     }
 
