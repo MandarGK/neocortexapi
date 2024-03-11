@@ -174,6 +174,7 @@ namespace NeoCortexApiExperiment
                     // This is a general way to get the SpatialPooler result from the layer.
                     var activeColumns = cortexLayer.GetResult("sp") as int[];
 
+<<<<<<< HEAD
                     var actCols = activeColumns.OrderBy(c => c).ToArray();
 
                     similarity = MathHelpers.CalcArraySimilarity(activeColumns, prevActiveCols[input]);
@@ -191,8 +192,26 @@ namespace NeoCortexApiExperiment
                 }
 
             }
+=======
+            }
 
-            return sp;
+            //Learning process will take 1000 iterations(cycles)
+            int maxSPLearningCycles = 1000;
+>>>>>>> 77a0a26ade43a2a68f6344963e049cca3608b6a7
+
+            int numStableCycles = 0;
+
+            for (int cycle = 0; cycle < maxSPLearningCycles; cycle++)
+            {
+                Debug.WriteLine($"Cycle  * {cycle} * Stability: {isInStableState}");
+
+                foreach (var input in inputs)
+                {
+                    //TODO: Write the code for learning the input and call spatial pooler experiment and output the respective SDR.
+                }
+
+
+                return sp;
         }
     }
 
