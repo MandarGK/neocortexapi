@@ -2,6 +2,7 @@
 using NeoCortexApi.Encoders;
 using NeoCortexApi.Entities;
 using NeoCortexApi.Network;
+using NeoCortexApi.Utility;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -154,20 +155,42 @@ namespace NeoCortexApiExperiment
                 prevActiveCols.Add(input, new int[0]);
             }
 
+            int maxSPLearningCycles = 1000;
 
-
-            //Intitializing the Counter..
-            int counter = 0;
-
-            if (isInStableState == true)
+            for (int cycle = 0; cycle < maxSPLearningCycles; cycle++)
             {
-                // Increasing Counter Value.
-                counter++;
+                Debug.WriteLine($"Cycle  * {cycle} * Stability: {isInStableState}");
+
+
+                foreach (var input in inputs)
+                {
+                    double similarity;
+
+                    // Learn the input pattern.
+                    // Output lyrOut is the output of the last module in the layer.
+                    // 
+                    var lyrOut = cortexLayer.Compute((object)input, true) as int[];
+
+                    // This is a general way to get the SpatialPooler result from the layer.
+                    var activeColumns = cortexLayer.GetResult("sp") as int[];
+
+                    var actCols = activeColumns.OrderBy(c => c).ToArray();
+
+                    similarity = MathHelpers.CalcArraySimilarity(activeColumns, prevActiveCols[input]);
+
+                    //Creating a Dictionary to store Sdr values.
+                    Dictionary<int, List<int>> SdrDictionary = new Dictionary<int, List<int>>();
+
+                    //Converting the var int[] actcols to List<int>.
+                    List<int> actColsintList = actCols.ToList();
+
+                    Debug.WriteLine($"[cycle={cycle.ToString("D4")}, i={input}, cols=:{actCols.Length} s={similarity}] SDR: {Helpers.StringifyVector(actCols)}");
+
+                    prevActiveCols[input] = activeColumns;
+                    prevSimilarity[input] = similarity;
+                }
 
             }
-            
-                
-
 
             return sp;
         }
