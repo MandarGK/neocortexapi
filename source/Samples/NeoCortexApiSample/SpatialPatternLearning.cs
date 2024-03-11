@@ -48,10 +48,10 @@ namespace NeoCortexApiSample
                 PotentialRadius = (int)(0.15 * inputBits),
                 LocalAreaDensity = -1,
                 ActivationThreshold = 10,
-                
+
                 MaxSynapsesPerSegment = (int)(0.01 * numColumns),
                 Random = new ThreadSafeRandom(42),
-                StimulusThreshold=10,
+                StimulusThreshold = 10
             };
 
             double max = 100;
@@ -86,8 +86,6 @@ namespace NeoCortexApiSample
 
             //RunRustructuringExperiment(sp, encoder, inputValues);
         }
-
-       
 
         /// <summary>
         /// Implements the experiment.
@@ -136,7 +134,7 @@ namespace NeoCortexApiSample
             SpatialPooler sp = new SpatialPooler(hpa);
             //sp = new SpatialPoolerMT(hpa);
 
-            // Initializes the 
+            // Initializes the patial pooler
             sp.Init(mem, new DistributedMemory() { ColumnDictionary = new InMemoryDistributedDictionary<int, NeoCortexApi.Entities.Column>(1) });
 
             // mem.TraceProximalDendritePotential(true);
@@ -157,8 +155,8 @@ namespace NeoCortexApiSample
             double[] inputs = inputValues.ToArray();
 
             //Understanding the Inout value in Array.
-            foreach(double value in inputs)
-{
+            foreach (double value in inputs)
+            {
                 Console.WriteLine("Inside For each");
                 Console.WriteLine(value);
             }
@@ -169,7 +167,7 @@ namespace NeoCortexApiSample
             // Will hold the similarity of SDKk and SDRk-1 fro every input.
             Dictionary<double, double> prevSimilarity = new Dictionary<double, double>();
 
-       
+
             //
             // Initiaize start similarity to zero.
             foreach (var input in inputs)
@@ -195,20 +193,9 @@ namespace NeoCortexApiSample
 
             for (int cycle = 0; cycle < maxSPLearningCycles; cycle++)
             {
-                Debug.WriteLine($"Cycle  ** {cycle} ** Stability: {isInStableState}");
-                
-                //Counter to display the number of stable cycles
-                if (isInStableState = true)
-                {
-                    stableCycles++;
-                }
+                Debug.WriteLine($"Cycle  * {cycle} * Stability: {isInStableState}");
 
-                else
-                {
-                    stableCycles = 0;
-                }
-                //
-                // This trains the layer on input pattern.
+
                 foreach (var input in inputs)
                 {
                     double similarity;
@@ -224,7 +211,7 @@ namespace NeoCortexApiSample
                     var actCols = activeColumns.OrderBy(c => c).ToArray();
 
                     similarity = MathHelpers.CalcArraySimilarity(activeColumns, prevActiveCols[input]);
-                    
+
                     //Creating a Dictionary to store Sdr values.
                     Dictionary<int, List<int>> SdrDictionary = new Dictionary<int, List<int>>();
 

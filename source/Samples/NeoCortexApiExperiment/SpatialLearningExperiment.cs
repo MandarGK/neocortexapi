@@ -64,7 +64,7 @@ namespace NeoCortexApiExperiment
 
                 MaxSynapsesPerSegment = (int)(0.01 * numColumns),
                 Random = new ThreadSafeRandom(42),
-                StimulusThreshold = 10,
+                StimulusThreshold = 0.5,
 
 
             };
@@ -90,23 +90,13 @@ namespace NeoCortexApiExperiment
 
             bool isInStableState = false;
 
-
-            //Creating the instance of Spatial Pooler Multithreaded version
-            SpatialPooler sp = new SpatialPooler();
-
-            //Initalizes the Spatial pooler
-            sp.Init(mem, new DistributedMemory() { ColumnDictionary = new InMemoryDistributedDictionary<int, NeoCortexApi.Entities.Column>(1) });
-
-            //Implementing Layers for Neocortex.
-            CortexLayer<object, object> cortexLayer = new CortexLayer<object, object>("L1");
-
-            // Encoder will receive the input and forward the encoded signal to the next module.
-            cortexLayer.HtmModules.Add("encoder", encoder);
-
-            // This Module will use the Output From Encoder and Build Spare Distributed Representation.
-            cortexLayer.HtmModules.Add("sp", sp);
-
             //Implementing New Method for Boosting
+            // HPC extends the default Spatial Pooler algorithm.
+            // The purpose of HPC is to set the SP in the new-born stage at the begining of the learning process.
+            // In this stage the boosting is very active, but the SP behaves instable. After this stage is over
+            // (defined by the second argument) the HPC is controlling the learning process of the SP.
+            // Once the SDR generated for every input gets stable, the HPC will fire event that notifies your code
+            // that SP is stable now.
             HomeostaticPlasticityController hpa = new HomeostaticPlasticityController(mem, inputValues.Count * 40,
                 (isStable, numPatterns, actColAvg, seenInputs) => {
 
@@ -123,8 +113,61 @@ namespace NeoCortexApiExperiment
                         //Entering in to Stable State
                         isInStableState = true;
                     }
-                     
+
                 });
+
+
+            //Creating the instance of Spatial Pooler Multithreaded version
+            SpatialPooler sp = new SpatialPooler();
+
+            //Initalizes the Spatial pooler
+            sp.Init(mem, new DistributedMemory() { ColumnDictionary = new InMemoryDistributedDictionary<int, NeoCortexApi.Entities.Column>(1) });
+
+            //Implementing Layers for Neocortex.
+            CortexLayer<object, object> cortexLayer = new CortexLayer<object, object>("L1");
+
+            // Encoder will receive the input and forward the encoded signal to the next module.
+            cortexLayer.HtmModules.Add("encoder", encoder);
+
+            // This Module will use the Output From Encoder and Build Sparse Distributed Representation.
+            cortexLayer.HtmModules.Add("sp", sp);
+
+            double[] inputs = inputValues.ToArray();
+
+            //Understanding the Input value in Array.
+            foreach (double value in inputs)
+            {
+                Console.WriteLine("Inside For each");
+                Console.WriteLine(value);
+            }
+
+            // Will hold the SDR of every inputs.
+            Dictionary<double, int[]> prevActiveCols = new Dictionary<double, int[]>();
+
+            // Will hold the similarity of SDKk and SDRk - 1 fro every input.
+            Dictionary<double, double> prevSimilarity = new Dictionary<double, double>();
+
+            //Initialize start similarity to zero.
+            foreach (var input in inputs)
+            {
+                prevSimilarity.Add(input, 0.0);
+                prevActiveCols.Add(input, new int[0]);
+            }
+
+
+
+            //Intitializing the Counter..
+            int counter = 0;
+
+            if (isInStableState == true)
+            {
+                // Increasing Counter Value.
+                counter++;
+
+            }
+            
+                
+
 
             return sp;
         }
