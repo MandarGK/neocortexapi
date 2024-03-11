@@ -61,5 +61,8 @@ Solution:
         It is observed that SP enters STABLE state in 409th cycle after 50 consecutive cycles no SDR change, But in 453rd cycle, SP becomes unstable because of a small SDR change. Later in 503rd cycle SP again enters STABLE state, and later it is stable till 1000 cycles.
         
         b. No.of stable cycles to wait on change = 75
+
         c. No.of stable cycles to wait on change = 100
+        It is observed that SP enters STABLE state in 509th cycle after that no SDR change, the SP remains in stable state.
+
    (.) By modifying the Similarity threshold.
