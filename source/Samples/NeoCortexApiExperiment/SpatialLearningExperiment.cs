@@ -27,7 +27,7 @@ namespace NeoCortexApiExperiment
 
             // Adding some parameter boosting Parameters 
           
-            double minOctOverlapCycles = 1.0;
+            double minOctOverlapCycles = 0.9;
             double maxBoost = 5.0;
 
             // Using the Mini Columns we will create a slice of neocortex.
@@ -53,7 +53,7 @@ namespace NeoCortexApiExperiment
             {
                 CellsPerColumn = 10,
                 MaxBoost = maxBoost,
-                DutyCyclePeriod = 100,
+                DutyCyclePeriod = 500,
                 MinPctOverlapDutyCycles = minOctOverlapCycles,
 
 
@@ -173,8 +173,7 @@ namespace NeoCortexApiExperiment
 
                     // This is a general way to get the SpatialPooler result from the layer.
                     var activeColumns = cortexLayer.GetResult("sp") as int[];
-
-<<<<<<< HEAD
+                    
                     var actCols = activeColumns.OrderBy(c => c).ToArray();
 
                     similarity = MathHelpers.CalcArraySimilarity(activeColumns, prevActiveCols[input]);
@@ -192,23 +191,6 @@ namespace NeoCortexApiExperiment
                 }
 
             }
-=======
-            }
-
-            //Learning process will take 1000 iterations(cycles)
-            int maxSPLearningCycles = 1000;
->>>>>>> 77a0a26ade43a2a68f6344963e049cca3608b6a7
-
-            int numStableCycles = 0;
-
-            for (int cycle = 0; cycle < maxSPLearningCycles; cycle++)
-            {
-                Debug.WriteLine($"Cycle  * {cycle} * Stability: {isInStableState}");
-
-                foreach (var input in inputs)
-                {
-                    //TODO: Write the code for learning the input and call spatial pooler experiment and output the respective SDR.
-                }
 
 
                 return sp;
