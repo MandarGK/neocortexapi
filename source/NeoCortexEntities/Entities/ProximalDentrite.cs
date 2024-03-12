@@ -101,20 +101,25 @@ namespace NeoCortexApi.Entities
         public void SetPermanences(AbstractSparseBinaryMatrix connectedCounts, HtmConfig htmConfig, double[] perms, int[] inputIndexes)
         {
             var permConnThreshold = htmConfig.SynPermConnected;
+            int index = 0;
+
 
             RFPool.ResetConnections();
             // c.getConnectedCounts().clearStatistics(ParentColumnIndex);
             connectedCounts.ClearStatistics(0 /*this.ParentColumnIndex*/);
             for (int i = 0; i < inputIndexes.Length; i++)
             {
+
+                
                 var synapse = RFPool.GetSynapseForInput(inputIndexes[i]);
                 synapse.Permanence = perms[i];
 
                 if (perms[i] >= permConnThreshold)
                 {
-                    connectedCounts.set(1, 0 /*ParentColumnIndex*/, i);
+                    connectedCounts.set(1, 0 /*ParentColumnIndex*/, inputIndexes[i]);
                 }
             }
+
         }
 
         /// <summary>
