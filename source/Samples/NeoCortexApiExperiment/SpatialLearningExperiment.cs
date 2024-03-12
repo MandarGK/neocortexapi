@@ -157,7 +157,11 @@ namespace NeoCortexApiExperiment
 
             int maxSPLearningCycles = 1000;
 
+
             int counter = 0;
+
+            // Creating a Dictionary to store SDR values.
+            Dictionary<int, List<List<int>>> SdrDictionary = new Dictionary<int, List<List<int>>>();
 
             for (int cycle = 0; cycle < maxSPLearningCycles; cycle++)
             {
@@ -180,11 +184,15 @@ namespace NeoCortexApiExperiment
 
                     similarity = MathHelpers.CalcArraySimilarity(activeColumns, prevActiveCols[input]);
 
-                    //Creating a Dictionary to store Sdr values.
-                    Dictionary<int, List<int>> SdrDictionary = new Dictionary<int, List<int>>();
+                    // Check if the input key already exists in the dictionary.
+                    if (!SdrDictionary.ContainsKey(Convert.ToInt32(input)))
+                    {
+                        // If not, add a new list to store SDR values for this input.
+                        SdrDictionary[Convert.ToInt32(input)] = new List<List<int>>();
+                    }
 
-                    //Converting the var int[] actcols to List<int>.
-                    List<int> actColsintList = actCols.ToList();
+                    // Add the current SDR to the list for this input.
+                    SdrDictionary[Convert.ToInt32(input)].Add(actCols.ToList());
 
                     Debug.WriteLine($"[cycle={cycle.ToString("D4")}, i={input}, cols=:{actCols.Length} s={similarity}] SDR: {Helpers.StringifyVector(actCols)}");
 
