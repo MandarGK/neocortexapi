@@ -194,7 +194,7 @@ namespace NeoCortexApiExperiment
                     // Add the current SDR to the list for this input.
                     SdrDictionary[Convert.ToInt32(input)].Add(actCols.ToList());
 
-                    Debug.WriteLine($"[cycle={cycle.ToString("D4")}, i={input}, cols=:{actCols.Length} s={similarity}] SDR: {Helpers.StringifyVector(actCols)}");
+                    Debug.WriteLine($"[cycle={cycle.ToString("D4")}, StableCycles ={counter}, i={input}, cols={actCols.Length} s={similarity}] SDR: {string.Join(", ", SdrDictionary[Convert.ToInt32(input)].Last())}");
 
                     prevActiveCols[input] = activeColumns;
                     prevSimilarity[input] = similarity;
