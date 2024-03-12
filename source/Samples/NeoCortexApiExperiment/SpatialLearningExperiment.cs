@@ -157,6 +157,8 @@ namespace NeoCortexApiExperiment
 
             int maxSPLearningCycles = 1000;
 
+            int counter = 0;
+
             for (int cycle = 0; cycle < maxSPLearningCycles; cycle++)
             {
                 Debug.WriteLine($"Cycle  * {cycle} * Stability: {isInStableState}");
