@@ -200,6 +200,56 @@ namespace NeoCortexApiExperiment
                     prevSimilarity[input] = similarity;
                 }
 
+                if (isInStableState)
+                {
+                    counter++;
+                    Debug.WriteLine($"Counter Value: {counter}");
+
+                    if (counter == inputs.Length)
+                    {
+                        // Print the last 100 stable cycles.
+                        int startCycle = Math.Max(0, cycle - 99); // Adjusted start cycle
+                        Debug.WriteLine($"Cycle:{cycle} , StartCycle: {startCycle}");
+                        int endCycle = cycle; // End cycle is the current cycle
+                        Debug.WriteLine($"Cycle:{cycle} , EndCycle: {endCycle}");
+
+
+                        for (int i = startCycle; i <= endCycle; i++)
+                        {
+                            Debug.WriteLine($"Cycle ** {i} **:");
+
+                            foreach (var kvp in SdrDictionary)
+                            {
+                                Debug.WriteLine($"Iteration: {kvp.Key}");
+
+                                // Check if the key exists in the dictionary and has the required number of iterations.
+                                if (SdrDictionary.ContainsKey(kvp.Key) && i - startCycle < SdrDictionary[kvp.Key].Count)
+                                {
+                                    // Get the SDRs for the current input key and cycle.
+                                    List<int> sdrsForInput = SdrDictionary[kvp.Key][i - startCycle];
+
+                                    // Print the SDRs in a formatted way.
+                                    Debug.WriteLine($"  SDR {i - startCycle + 1}: {Helpers.StringifyVector(sdrsForInput.ToArray())}");
+                                }
+
+                            }
+
+                            Debug.WriteLine("");  // New line for the next cycle.
+                        }
+
+                        // Break after printing the last 100 stable cycles.
+                        break;
+                    }
+
+                }
+                else
+                {
+                    SdrDictionary.Clear();
+                    counter = 0;
+                    Debug.WriteLine($"Counter is set to Zero Stability is not yet Reached");
+                }
+
+
             }
 
 
