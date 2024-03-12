@@ -27,7 +27,7 @@ namespace NeoCortexApiExperiment
 
             // Adding some parameter boosting Parameters 
           
-            double minOctOverlapCycles = 0.9;
+            double minOctOverlapCycles = 1.0;
             double maxBoost = 5.0;
 
             // Using the Mini Columns we will create a slice of neocortex.
@@ -39,7 +39,7 @@ namespace NeoCortexApiExperiment
             /// </summary>
             Dictionary<string, object> settings = new Dictionary<string, object>()
             {
-                { "W", 5},
+                { "W", 15},
                 { "N", inputBits},
                 { "Radius", -1.0},
                 { "MinVal", 0.0},
@@ -53,7 +53,7 @@ namespace NeoCortexApiExperiment
             {
                 CellsPerColumn = 10,
                 MaxBoost = maxBoost,
-                DutyCyclePeriod = 500,
+                DutyCyclePeriod = 100,
                 MinPctOverlapDutyCycles = minOctOverlapCycles,
 
 
@@ -65,7 +65,7 @@ namespace NeoCortexApiExperiment
 
                 MaxSynapsesPerSegment = (int)(0.01 * numColumns),
                 Random = new ThreadSafeRandom(42),
-                StimulusThreshold = 0.5,
+                StimulusThreshold = 10,
 
 
             };
