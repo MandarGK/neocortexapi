@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Damir Dobric. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -94,15 +95,20 @@ namespace NeoCortexApi.Utility
         {
             if (originArray.Length > 0 && comparingArray.Length > 0)
             {
-                int cnt = 0;
+                /*               int cnt = 0;
 
-                foreach (var item in comparingArray)
-                {
-                    if (originArray.Contains(item))
-                        cnt++;
-                }
+                               foreach (var item in comparingArray)
+                               {
+                                   if (originArray.Contains(item))
+                                       cnt++;
+                               }
 
-                return ((double)cnt / (double)Math.Max(originArray.Length, comparingArray.Length)) * 100.0;
+                               //return ((double)cnt / (double)Math.Max(originArray.Length, comparingArray.Length)) * 100.0;
+                               return ((double)cnt /  ((double)(originArray.Length + comparingArray.Length))  * 100.0);
+                */
+                double similarity = (originArray.Intersect(comparingArray).Count() /
+                            (double)originArray.Union(comparingArray).Count()) * 100.0;
+                return similarity;
             }
             else
             {
