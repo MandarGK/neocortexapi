@@ -67,3 +67,10 @@ Solution:
         It is observed that SP enters STABLE state in 509th cycle after that no SDR change, the SP remains in stable state.
 
    (.) By modifying the Similarity threshold.
+        a. when similarity threshold is 0.97
+
+        b. when similarity threshold is 0.95
+
+3. When the stability is achieved, we check if it remains stable throughout.
+
+
