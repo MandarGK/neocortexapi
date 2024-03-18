@@ -209,9 +209,9 @@ namespace NeoCortexApiExperiment
                     {
                         // Print the last 100 stable cycles.
                         int startCycle = Math.Max(0, cycle - 99); // Adjusted start cycle
-                        Debug.WriteLine($"Cycle:{cycle} , StartCycle: {startCycle}");
+                        
                         int endCycle = cycle; // End cycle is the current cycle
-                        Debug.WriteLine($"Cycle:{cycle} , EndCycle: {endCycle}");
+                        
 
 
                         for (int i = startCycle; i <= endCycle; i++)
