@@ -107,14 +107,18 @@ namespace NeoCortexApi.Entities
             connectedCounts.ClearStatistics(0 /*this.ParentColumnIndex*/);
             for (int i = 0; i < inputIndexes.Length; i++)
             {
+
+                
                 var synapse = RFPool.GetSynapseForInput(inputIndexes[i]);
                 synapse.Permanence = perms[i];
 
                 if (perms[i] >= permConnThreshold)
                 {
-                    connectedCounts.set(1, 0 /*ParentColumnIndex*/, i);
+                    //connectedCounts.set(1, 0 /*ParentColumnIndex*/, i);
+                    connectedCounts.set(1, 0 /*ParentColumnIndex*/, inputIndexes[i]);
                 }
             }
+
         }
 
         /// <summary>

@@ -154,19 +154,11 @@ namespace NeoCortexApiSample
 
             double[] inputs = inputValues.ToArray();
 
-            //Understanding the Inout value in Array.
-            foreach (double value in inputs)
-            {
-                Console.WriteLine("Inside For each");
-                Console.WriteLine(value);
-            }
-
             // Will hold the SDR of every inputs.
             Dictionary<double, int[]> prevActiveCols = new Dictionary<double, int[]>();
 
             // Will hold the similarity of SDKk and SDRk-1 fro every input.
             Dictionary<double, double> prevSimilarity = new Dictionary<double, double>();
-
 
             //
             // Initiaize start similarity to zero.
@@ -175,16 +167,6 @@ namespace NeoCortexApiSample
                 prevSimilarity.Add(input, 0.0);
                 prevActiveCols.Add(input, new int[0]);
             }
-
-            //Implementing dictionary for SDR.
-            //Dictionary<int, List<int>> SdrDictionary = new Dictionary<int, List<int>>();
-
-            //Adding Key and value pair into created Dictionary
-            //SdrDictionary.Add(input, Helpers.StringifyVector(actCols) );
-            //foreach (var input in inputs)
-            //{
-            //    SdrDictionary.Add(input, { Helpers.StringifyVector(actCols)} );
-            //}
 
             // Learning process will take 1000 iterations (cycles)
             int maxSPLearningCycles = 1000;
@@ -202,7 +184,6 @@ namespace NeoCortexApiSample
 
                     // Learn the input pattern.
                     // Output lyrOut is the output of the last module in the layer.
-                    // 
                     var lyrOut = cortexLayer.Compute((object)input, true) as int[];
 
                     // This is a general way to get the SpatialPooler result from the layer.
@@ -221,32 +202,11 @@ namespace NeoCortexApiSample
                     //Adding Keys and values to created Dictionary.
                     SdrDictionary.Add(Convert.ToInt32(input), actColsintList);
 
-                    //Printing the Dictionary for Verification.
-                    foreach (var kvp in SdrDictionary)
-                    {
-                        Console.Write($"Key: {kvp.Key}, SDR: ");
-
-                        foreach (var item in kvp.Value)
-                        {
-                            Console.Write($"{item} ");
-                        }
-
-                        Console.WriteLine();
-                    }
-
                     Debug.WriteLine($"[cycle={cycle.ToString("D4")},sc={stableCycles}, i={input}, cols=:{actCols.Length} s={similarity}] SDR: {Helpers.StringifyVector(actCols)}");
 
                     prevActiveCols[input] = activeColumns;
                     prevSimilarity[input] = similarity;
                 }
-
-                //if (isInStableState)
-                //{
-                //    numStableCycles++;
-                //}
-
-                //if (numStableCycles > 5)
-                //    break;
             }
 
             return sp;
