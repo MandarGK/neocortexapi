@@ -56,7 +56,6 @@ namespace NeoCortexApiExperiment
 
             double max = 100;
 
-            //
             // This dictionary defines a set of typical encoder parameters.
             Dictionary<string, object> settings = new Dictionary<string, object>()
             {
@@ -73,7 +72,6 @@ namespace NeoCortexApiExperiment
 
             EncoderBase encoder = new ScalarEncoder(settings);
 
-            //
             // We create here 100 random input values.
             List<double> inputValues = new List<double>();
 
@@ -102,7 +100,6 @@ namespace NeoCortexApiExperiment
             bool isInStableState = false;
 
             
-            //
             // HPC extends the default Spatial Pooler algorithm.
             // The purpose of HPC is to set the SP in the new-born stage at the begining of the learning process.
             // In this stage the boosting is very active, but the SP behaves instable. After this stage is over
@@ -113,17 +110,15 @@ namespace NeoCortexApiExperiment
                 (isStable, numPatterns, actColAvg, seenInputs) =>
                 {
                     // Event should only be fired when entering the stable state.
-                    // Ideal SP should never enter unstable state after stable state.
+                    // Ideal SP should never enter instable state after stable state.
                     if (isStable == false)
                     {
                         Debug.WriteLine($"INSTABLE STATE");
-                        // This should usually not happen.
                         isInStableState = false;
                     }
                     else
                     {
                         Debug.WriteLine($"STABLE STATE");
-                        // Here you can perform any action if required.
                         isInStableState = true;
                     }
                 });
@@ -248,7 +243,8 @@ namespace NeoCortexApiExperiment
 
                             }
 
-                            Debug.WriteLine("");  // New line for the next cycle.
+                            // New line for the next cycle.
+                            Debug.WriteLine("");  
                         }
 
                         // Break after printing the last 100 stable cycles.
@@ -259,10 +255,10 @@ namespace NeoCortexApiExperiment
                 else
                 {
 
-                    // Clearing All SDR Stored in Dictionary during the Instable state.
+                    // Clearing all SDR stored in dictionary during the instable state.
                     SdrDictionary.Clear();
 
-                    // Setting the counter to reset / 0 during the Instable state of Spatial pooler.
+                    // Setting the counter to reset / 0 during the instable state of spatial pooler.
                     counter = 0;
                     Debug.WriteLine($"Counter is set to Zero Stability is not yet Reached");
                 }
