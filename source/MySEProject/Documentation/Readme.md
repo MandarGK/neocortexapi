@@ -28,32 +28,13 @@ SDR:
 
 Solution:
 
-1. The SDRs of all inputs are implemented in the form of dictionary as follows,
-    for (int cycle = 0; cycle < maxSPLearningCycles; cycle++)
-    
-    {
+1. Input is the key, which is the scalar value. The value in the dictionary is the list of integers that represent the SDR (currently active mini-columns).
+   The SDRs of all inputs are implemented in the form of dictionary as follows,
 
-        Dictionary<int, List<int>> SdrDictionary = new Dictionary<int, List<int>>();
-         SdrDictionary.Add(input, { Helpers.StringifyVector(actCols)} );
-         Console.WriteLine("Printing the dictionary:");
-          foreach(var kvp in SdrDictionary)
-                 {
-                     Console.Write($"Key: {kvp.Key}, Values: [");
-         
-                     // Printing the elements of the List<int>
-                     for (int i = 0; i < kvp.Value.Count; i++)
-                     {
-                         Console.Write($"{kvp.Value[i]}");
-                         if (i < kvp.Value.Count - 1)
-                         {
-                             Console.Write(", ");
-                         }
-                     }
-         
-                    Console.WriteLine("]");
-         
-                 }
-    }
+    // Creating a Dictionary to store SDR values.
+    Dictionary<int, List<List<int>>> SdrDictionary = new Dictionary<int, List<List<int>>>();
+    SdrDictionary.Add(input, { Helpers.StringifyVector(actCols)} );
+    
 2. During learning time, the Spatial Pooler creates different SDRs for the same input and after sometime it keeps the SDR stable.
    To ensure there is no SDR change is detected (instable state) after the stable state is set to true, we have implemented the following,
    (.) By modifying the "No.of stable cycles to wait on change"
