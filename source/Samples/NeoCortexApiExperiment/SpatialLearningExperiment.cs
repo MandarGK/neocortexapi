@@ -1,4 +1,5 @@
-﻿using NeoCortexApi;
+﻿using NeoCortex;
+using NeoCortexApi;
 using NeoCortexApi.Encoders;
 using NeoCortexApi.Entities;
 using NeoCortexApi.Network;
@@ -10,6 +11,12 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Xml;
+using System.Drawing;
+using System.IO;
+using System.Linq;
+using static NPOI.HSSF.Util.HSSFColor;
+using NPOI.SS.Formula.Functions;
+using NPOI.OpenXmlFormats.Spreadsheet;
 
 namespace NeoCortexApiExperiment
 {
@@ -82,7 +89,7 @@ namespace NeoCortexApiExperiment
                 inputValues.Add((double)i);
             }
 
-            var sp = RunExperiment(cfg, encoder, inputValues);
+            var sp = RunExperiment(cfg, encoder, inputValues, numColumns);
 
             
         }
@@ -94,7 +101,7 @@ namespace NeoCortexApiExperiment
         /// <param name="encoder"></param>
         /// <param name="inputValues"></param>
         /// <returns>The trained bersion of the SP.</returns>
-        private static SpatialPooler RunExperiment(HtmConfig cfg, EncoderBase encoder, List<double> inputValues)
+        private static SpatialPooler RunExperiment(HtmConfig cfg, EncoderBase encoder, List<double> inputValues, int numColumns)
         {
             // Creates the htm memory.
             var mem = new Connections(cfg);
@@ -175,6 +182,8 @@ namespace NeoCortexApiExperiment
             // Creating a Dictionary to store SDR values.
             Dictionary<int, List<List<int>>> SdrDictionary = new Dictionary<int, List<List<int>>>();
 
+            // Define a list to store SDRs for the 0th input
+            List<(int CycleNumber, List<int> SDR)> sdrsForInput0 = new List<(int CycleNumber, List<int> SDR)>();
 
             for (int cycle = 0; cycle < maxSPLearningCycles; cycle++)
             {
@@ -206,9 +215,18 @@ namespace NeoCortexApiExperiment
                     // Add the current SDR to the list for this input.
                     SdrDictionary[Convert.ToInt32(input)].Add(actCols.ToList());
 
+                    if (Convert.ToInt32(input) == 0) // Check if the input is the 0th input
+                    {
+                        // Add the current cycle number and SDR for the 0th input to the list
+                        sdrsForInput0.Add((cycle, actCols.ToList()));
+                    }
+
                     Debug.WriteLine($"[cycle={cycle.ToString("D4")}, StableCycles ={counter}, i={input}, cols={actCols.Length} s={similarity}] SDR: {string.Join(", ", SdrDictionary[Convert.ToInt32(input)].Last())}");
                     prevActiveCols[input] = activeColumns;
                     prevSimilarity[input] = similarity;
+
+                    
+
                 }
 
 
@@ -234,8 +252,6 @@ namespace NeoCortexApiExperiment
 
                             foreach (var kvp in SdrDictionary)
                             {
-                                Debug.WriteLine($"Iteration: {kvp.Key}");
-
                                 // Check if the key exists in the dictionary and has the required number of iterations.
                                 if (SdrDictionary.ContainsKey(kvp.Key) && i - startCycle < SdrDictionary[kvp.Key].Count)
                                 {
@@ -243,13 +259,14 @@ namespace NeoCortexApiExperiment
                                     List<int> sdrsForInput = SdrDictionary[kvp.Key][i - startCycle];
 
                                     // Print the SDRs in a formatted way.
-                                    Debug.WriteLine($"  SDR {i - startCycle + 1}: {Helpers.StringifyVector(sdrsForInput.ToArray())}");
+                                    Debug.WriteLine($" Iteration: {kvp.Key} | SDR of {i - startCycle + 1} stable cycle: {Helpers.StringifyVector(sdrsForInput.ToArray())}");
                                 }
 
                             }
 
                             Debug.WriteLine("");  // New line for the next cycle.
                         }
+                        
 
                         // Break after printing the last 100 stable cycles.
                         break;
@@ -261,13 +278,21 @@ namespace NeoCortexApiExperiment
 
                     // Clearing All SDR Stored in Dictionary during the Instable state.
                     SdrDictionary.Clear();
-
                     // Setting the counter to reset / 0 during the Instable state of Spatial pooler.
                     counter = 0;
                     Debug.WriteLine($"Counter is set to Zero Stability is not yet Reached");
                 }
 
+               
+
             }
+            Debug.WriteLine("SDRs for the 0th input:");
+            // Print input number, cycle number, and SDRs for the 0th input
+            foreach (var (CycleNumber, SDR) in sdrsForInput0)
+            {
+                Debug.WriteLine($"Input No: 0, Cycle Number: {CycleNumber}, SDR: {string.Join(", ", SDR)}");
+            }
+
 
             return sp;
         }
