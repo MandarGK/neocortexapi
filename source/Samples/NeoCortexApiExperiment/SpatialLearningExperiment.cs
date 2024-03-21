@@ -182,7 +182,7 @@ namespace NeoCortexApiExperiment
             // Creating a Dictionary to store SDR values.
             Dictionary<int, List<List<int>>> SdrDictionary = new Dictionary<int, List<List<int>>>();
 
-            // Define a list to store SDRs for the 0th input
+            // Define a list to store SDRs for the 99th input
             List<(int CycleNumber, List<int> SDR)> sdrsForInput0 = new List<(int CycleNumber, List<int> SDR)>();
 
             for (int cycle = 0; cycle < maxSPLearningCycles; cycle++)
@@ -215,7 +215,7 @@ namespace NeoCortexApiExperiment
                     // Add the current SDR to the list for this input.
                     SdrDictionary[Convert.ToInt32(input)].Add(actCols.ToList());
 
-                    if (Convert.ToInt32(input) == 0) // Check if the input is the 0th input
+                    if (Convert.ToInt32(input) == 99) // Check if the input is the 99th input
                     {
                         // Add the current cycle number and SDR for the 0th input to the list
                         sdrsForInput0.Add((cycle, actCols.ToList()));
@@ -286,11 +286,11 @@ namespace NeoCortexApiExperiment
                
 
             }
-            Debug.WriteLine("SDRs for the 0th input:");
-            // Print input number, cycle number, and SDRs for the 0th input
+            Debug.WriteLine("SDRs for the 99th input:");
+            // Print input number, cycle number, and SDRs for the 99th input
             foreach (var (CycleNumber, SDR) in sdrsForInput0)
             {
-                Debug.WriteLine($"Input No: 0, Cycle Number: {CycleNumber}, SDR: {string.Join(", ", SDR)}");
+                Debug.WriteLine($"Input No: 99, Cycle Number: {CycleNumber}, SDR: {string.Join(", ", SDR)}");
             }
 
 
