@@ -14,9 +14,6 @@ using System.Xml;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using static NPOI.HSSF.Util.HSSFColor;
-using NPOI.SS.Formula.Functions;
-using NPOI.OpenXmlFormats.Spreadsheet;
 
 namespace NeoCortexApiExperiment
 {
@@ -32,8 +29,8 @@ namespace NeoCortexApiExperiment
 
             // Used as a boosting parameters
             // that ensure homeostatic plasticity effect.
-            double minOctOverlapCycles = 1.0;
-            double maxBoost = 5.0;
+            double minOctOverlapCycles = 0.001;
+            double maxBoost = 10.0;
 
             // We will use 200 bits to represent an input vector (pattern).
             int inputBits = 200;
@@ -47,7 +44,7 @@ namespace NeoCortexApiExperiment
             {
                 CellsPerColumn = 10,
                 MaxBoost = maxBoost,
-                DutyCyclePeriod = 100,
+                DutyCyclePeriod = 1000,
                 MinPctOverlapDutyCycles = minOctOverlapCycles,
 
                 GlobalInhibition = false,
@@ -274,12 +271,12 @@ namespace NeoCortexApiExperiment
 
                     // Clearing all SDR stored in dictionary during the instable state.
                     SdrDictionary.Clear();
-<<<<<<< HEAD
+
 
                     // Setting the counter to reset / 0 during the instable state of spatial pooler.
-=======
+
                     // Setting the counter to reset / 0 during the Instable state of Spatial pooler.
->>>>>>> bfb227a149132d30be9fb62e23752f7f53c983bf
+
                     counter = 0;
                     Debug.WriteLine($"Counter is set to Zero Stability is not yet Reached");
                 }

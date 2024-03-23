@@ -202,7 +202,7 @@ namespace NeoCortexApi.Entities
         /// <param name="inputVectorIndexes"></param>
         public void SetProximalPermanencesSparse(HtmConfig htmConfig, double[] permanences, int[] inputVectorIndexes)
         {
-            this.ProximalDendrite.SetPermanences(this.ConnectedInputCounterMatrix, htmConfig, permanences, inputVectorIndexes);
+            this.ProximalDendrite.SetUpdatedPermanences(this.ConnectedInputCounterMatrix, htmConfig, permanences, inputVectorIndexes);
         }
 
         /// <summary>

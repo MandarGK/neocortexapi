@@ -114,7 +114,6 @@ namespace NeoCortexApi.Entities
 
                 if (perms[i] >= permConnThreshold)
                 {
-                    //connectedCounts.set(1, 0 /*ParentColumnIndex*/, i);
                     connectedCounts.set(1, 0 /*ParentColumnIndex*/, i);
                 }
             }
