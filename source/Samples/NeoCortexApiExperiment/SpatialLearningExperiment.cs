@@ -14,12 +14,10 @@ using System.Xml;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-<<<<<<< HEAD
 using static NPOI.HSSF.Util.HSSFColor;
 using NPOI.SS.Formula.Functions;
 using NPOI.OpenXmlFormats.Spreadsheet;
-=======
->>>>>>> 22b34bee213983bc42ccaff497730f96ffba014f
+
 
 namespace NeoCortexApiExperiment
 {
@@ -35,8 +33,8 @@ namespace NeoCortexApiExperiment
 
             // Used as a boosting parameters
             // that ensure homeostatic plasticity effect.
-            double minOctOverlapCycles = 1.0;
-            double maxBoost = 5.0;
+            double minOctOverlapCycles = 0.001;
+            double maxBoost = 10.0;
 
             // We will use 200 bits to represent an input vector (pattern).
             int inputBits = 200;
@@ -50,7 +48,7 @@ namespace NeoCortexApiExperiment
             {
                 CellsPerColumn = 10,
                 MaxBoost = maxBoost,
-                DutyCyclePeriod = 100,
+                DutyCyclePeriod = 1000,
                 MinPctOverlapDutyCycles = minOctOverlapCycles,
 
                 GlobalInhibition = false,
@@ -185,9 +183,11 @@ namespace NeoCortexApiExperiment
             // Creating a Dictionary to store SDR values.
             Dictionary<int, List<List<int>>> SdrDictionary = new Dictionary<int, List<List<int>>>();
 
-            // Define a list to store SDRs for the 99th input
-            List<(int CycleNumber, List<int> SDR)> sdrsForInput0 = new List<(int CycleNumber, List<int> SDR)>();
+            // Define a list to store SDRs for the 0th input
+            List<(int Cycle, double Similarity, int[] ActCols,List<int> SDR )> sdrsForInput0 = new List<(int Cycle, double Similarity, int[] ActCols, List<int> SDR)>();
 
+            // Define a dictionary to track stability for each input
+            Dictionary<int, int> stableCycles = new Dictionary<int, int>();
 
             for (int cycle = 0; cycle < maxSPLearningCycles; cycle++)
             {
@@ -204,7 +204,6 @@ namespace NeoCortexApiExperiment
 
                     // This is a general way to get the SpatialPooler result from the layer.
                     var activeColumns = cortexLayer.GetResult("sp") as int[];
-                    // int[] activeColumnsArray = Enumerable.Range(0, numColumns).Select(i => activeColumns.Contains(i) ? 1 : 0).ToArray();
                     
                     var actCols = activeColumns.OrderBy(c => c).ToArray();
 
@@ -220,14 +219,22 @@ namespace NeoCortexApiExperiment
                     // Add the current SDR to the list for this input.
                     SdrDictionary[Convert.ToInt32(input)].Add(actCols.ToList());
 
-                    if (Convert.ToInt32(input) == 99) // Check if the input is the 99th input
+                    if (Convert.ToInt32(input) <= 99 && MathHelpers.AreArraysEqual(activeColumns, prevActiveCols[input]))
                     {
-                        // Add the current cycle number and SDR for the 0th input to the list
-                        sdrsForInput0.Add((cycle, actCols.ToList()));
+                        stableCycles[Convert.ToInt32(input)]++; // Increment stable cycles count
+                    }
+                    else
+                    {
+                        stableCycles[Convert.ToInt32(input)] = 0; // Reset stable cycles count
                     }
 
-                    Debug.WriteLine($"[cycle={cycle.ToString("D4")}, StableCycles ={counter}, i={input}, cols={actCols.Length} s={similarity}] SDR: {string.Join(", ", SdrDictionary[Convert.ToInt32(input)].Last())}");
-                    prevActiveCols[input] = activeColumns;
+                    if (Convert.ToInt32(input) == 0) // Check if the input is the 99th input
+                    {
+                        // Add the current cycle number and SDR for the 0th input to the list
+                        sdrsForInput0.Add((cycle, similarity, actCols, actCols.ToList()));
+                    }
+
+                    Debug.WriteLine($"[cycle={cycle.ToString("D4")}, N={stableCycles[Convert.ToInt32(input)]} , StableCycles ={counter}, i={input}, cols={actCols.Length} s={similarity}] SDR: {string.Join(", ", SdrDictionary[Convert.ToInt32(input)].Last())}"); prevActiveCols[input] = activeColumns;
                     prevSimilarity[input] = similarity;
 
                     
@@ -255,6 +262,9 @@ namespace NeoCortexApiExperiment
                         // Print stable cycles
                         PrintStableCycles(SdrDictionary, startCycle, endCycle);
 
+                        // Print SDRs of the 99th input
+                        PrintSdrsForInput(SdrDictionary, sdrsForInput0);
+
 
                         // Break after printing the last 100 stable cycles.
                         break;
@@ -274,17 +284,17 @@ namespace NeoCortexApiExperiment
                
 
             }
-            Debug.WriteLine("SDRs for the 99th input:");
-            // Print input number, cycle number, and SDRs for the 99th input
-            foreach (var (CycleNumber, SDR) in sdrsForInput0)
-            {
-                Debug.WriteLine($"Input No: 99, Cycle Number: {CycleNumber}, SDR: {string.Join(", ", SDR)}");
-            }
-
-
+            
             return sp;
         }
 
+
+        /// <summary>
+        /// Prints the SDRs for stable cycles within the specified range of cycles.
+        /// </summary>
+        /// <param name="SdrDictionary">A dictionary containing SDRs for different inputs and cycles.</param>
+        /// <param name="startCycle">The starting cycle number to print SDRs from.</param>
+        /// <param name="endCycle">The ending cycle number to print SDRs until.</param>
         public static void PrintStableCycles(Dictionary<int, List<List<int>>> SdrDictionary, int startCycle, int endCycle)
         {
             for (int i = startCycle; i <= endCycle; i++)
@@ -309,5 +319,21 @@ namespace NeoCortexApiExperiment
             }
         }
 
+        /// <summary>
+        /// Prints the SDRs for the 0th input along with cycle number, similarity, active columns, and SDRs.
+        /// </summary>
+        /// <param name="sdrDictionary">A dictionary containing SDRs for different inputs.</param>
+        /// <param name="sdrsForInput0">A list containing tuples of cycle number, similarity, active columns, and SDRs for the 0th input.</param>
+        private static void PrintSdrsForInput(Dictionary<int, List<List<int>>> sdrDictionary, List<(int Cycle,double Similarity, int[] ActCols,List<int> SDR)> sdrsForInput0)
+        {
+            foreach (var (cycle, similarity, actCols, sdr) in sdrsForInput0)
+            {
+                Debug.WriteLine($"Input 0th, Cycle: {cycle}, Similarity: {similarity}, Columns: {actCols.Length}, SDR: {string.Join(", ", sdr)}");
+            }
+        }
+
+        
+
     }
 }
+
