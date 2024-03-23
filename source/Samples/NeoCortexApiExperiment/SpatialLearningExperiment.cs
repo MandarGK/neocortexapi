@@ -14,9 +14,12 @@ using System.Xml;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+<<<<<<< HEAD
 using static NPOI.HSSF.Util.HSSFColor;
 using NPOI.SS.Formula.Functions;
 using NPOI.OpenXmlFormats.Spreadsheet;
+=======
+>>>>>>> 22b34bee213983bc42ccaff497730f96ffba014f
 
 namespace NeoCortexApiExperiment
 {
@@ -185,6 +188,7 @@ namespace NeoCortexApiExperiment
             // Define a list to store SDRs for the 99th input
             List<(int CycleNumber, List<int> SDR)> sdrsForInput0 = new List<(int CycleNumber, List<int> SDR)>();
 
+
             for (int cycle = 0; cycle < maxSPLearningCycles; cycle++)
             {
                 Debug.WriteLine($"Cycle  * {cycle} * Stability: {isInStableState}");
@@ -200,7 +204,8 @@ namespace NeoCortexApiExperiment
 
                     // This is a general way to get the SpatialPooler result from the layer.
                     var activeColumns = cortexLayer.GetResult("sp") as int[];
-
+                    // int[] activeColumnsArray = Enumerable.Range(0, numColumns).Select(i => activeColumns.Contains(i) ? 1 : 0).ToArray();
+                    
                     var actCols = activeColumns.OrderBy(c => c).ToArray();
 
                     similarity = MathHelpers.CalcArraySimilarity(activeColumns, prevActiveCols[input]);
@@ -246,27 +251,10 @@ namespace NeoCortexApiExperiment
                         // Checking the last 100th Cycle for the Iteration 
                         int endCycle = cycle; // End cycle is the current cycle
 
-                        for (int i = startCycle; i <= endCycle; i++)
-                        {
-                            Debug.WriteLine($"Cycle ** {i} **:");
 
-                            foreach (var kvp in SdrDictionary)
-                            {
-                                // Check if the key exists in the dictionary and has the required number of iterations.
-                                if (SdrDictionary.ContainsKey(kvp.Key) && i - startCycle < SdrDictionary[kvp.Key].Count)
-                                {
-                                    // Get the SDRs for the current input key and cycle.
-                                    List<int> sdrsForInput = SdrDictionary[kvp.Key][i - startCycle];
+                        // Print stable cycles
+                        PrintStableCycles(SdrDictionary, startCycle, endCycle);
 
-                                    // Print the SDRs in a formatted way.
-                                    Debug.WriteLine($" Iteration: {kvp.Key} | SDR of {i - startCycle + 1} stable cycle: {Helpers.StringifyVector(sdrsForInput.ToArray())}");
-                                }
-
-                            }
-
-                            Debug.WriteLine("");  // New line for the next cycle.
-                        }
-                        
 
                         // Break after printing the last 100 stable cycles.
                         break;
@@ -297,6 +285,29 @@ namespace NeoCortexApiExperiment
             return sp;
         }
 
-       
+        public static void PrintStableCycles(Dictionary<int, List<List<int>>> SdrDictionary, int startCycle, int endCycle)
+        {
+            for (int i = startCycle; i <= endCycle; i++)
+            {
+                Debug.WriteLine($"Cycle * {i} *:");
+
+                foreach (var kvp in SdrDictionary)
+                {
+                    // Check if the key exists in the dictionary and has the required number of iterations.
+                    if (SdrDictionary.ContainsKey(kvp.Key) && i - startCycle < SdrDictionary[kvp.Key].Count)
+                    {
+                        // Get the SDRs for the current input key and cycle.
+                        List<int> sdrsForInput = SdrDictionary[kvp.Key][i - startCycle];
+
+                        // Print the SDRs in a formatted way.
+                        Debug.WriteLine($" Iteration: {kvp.Key} | SDR of {i - startCycle + 1} stable cycle: {Helpers.StringifyVector(sdrsForInput.ToArray())}");
+                    }
+
+                }
+
+                Debug.WriteLine("");  // New line for the next cycle.
+            }
+        }
+
     }
 }
