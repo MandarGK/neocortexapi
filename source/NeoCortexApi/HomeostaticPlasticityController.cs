@@ -5,6 +5,7 @@ using NeoCortexApi.Entities;
 using NeoCortexApi.Utility;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -106,7 +107,7 @@ namespace NeoCortexApi
         /// Higher numbers ensure more stable SP, but it takes longer time to enter the stable stabe.</param>
         /// <param name="requiredSimilarityThreshold">The similarity between last and current SDR of the single pattern that must be reached to declare the SRR
         /// these two SDRs same.</param>
-        public HomeostaticPlasticityController(Connections htmMemory, int minCycles, Action<bool, int, double, int> onStabilityStatusChanged, int numOfCyclesToWaitOnChange = 75, double requiredSimilarityThreshold = 0.97)
+        public HomeostaticPlasticityController(Connections htmMemory, int minCycles, Action<bool, int, double, int> onStabilityStatusChanged, int numOfCyclesToWaitOnChange = 100, double requiredSimilarityThreshold = 0.97)
         {
             this.m_OnStabilityStatusChanged = onStabilityStatusChanged;
             this.m_HtmMemory = htmMemory;
@@ -157,7 +158,7 @@ namespace NeoCortexApi
 
                 // If the input has been already seen, we calculate the similarity between already seen input
                 // and the new input. The similarity is calculated as a correlation function.
-                var similarity = CalcArraySimilarity(ArrayUtils.IndexWhere(m_InOutMap[inpHash], k => k == 1), ArrayUtils.IndexWhere(output, k => k == 1));
+                var similarity = JacardSimilarity(ArrayUtils.IndexWhere(m_InOutMap[inpHash], k => k == 1), ArrayUtils.IndexWhere(output, k => k == 1));
 
                 // We replace the existing value with the new one.
                 m_InOutMap[inpHash] = output;
@@ -275,6 +276,31 @@ namespace NeoCortexApi
                 }
 
                 return ((double)cnt / (double)Math.Max(originArray.Length, comparingArray.Length));
+            }
+            else
+            {
+                return -1.0;
+            }
+        }
+
+        /// <summary>
+        /// Computes the Jaccard similarity between two integer arrays.
+        /// </summary>
+        /// <param name="originArray">The first array for comparison.</param>
+        /// <param name="comparingArray">The second array for comparison.</param>
+        /// <returns>
+        /// The Jaccard similarity coefficient between the two arrays.
+        /// Returns -1.0 if either of the input arrays is empty.
+        /// The Jaccard similarity coefficient is computed as:
+        ///     (size of intersection of the arrays / size of union of the arrays)
+        /// </returns>
+        public static double JacardSimilarity(int[] originArray, int[] comparingArray)
+        {
+            if (originArray.Length > 0 && comparingArray.Length > 0)
+            {
+                double similarity = (originArray.Intersect(comparingArray).Count() /
+                            (double)originArray.Union(comparingArray).Count());
+                return similarity;
             }
             else
             {

@@ -95,17 +95,37 @@ namespace NeoCortexApi.Utility
         {
             if (originArray.Length > 0 && comparingArray.Length > 0)
             {
-                /*               int cnt = 0;
+                int cnt = 0;
 
-                               foreach (var item in comparingArray)
-                               {
-                                   if (originArray.Contains(item))
-                                       cnt++;
-                               }
+                foreach (var item in comparingArray)
+                {
+                    if (originArray.Contains(item))
+                        cnt++;
+                }
 
-                               //return ((double)cnt / (double)Math.Max(originArray.Length, comparingArray.Length)) * 100.0;
-                               return ((double)cnt /  ((double)(originArray.Length + comparingArray.Length))  * 100.0);
-                */
+                return ((double)cnt / (double)Math.Max(originArray.Length, comparingArray.Length)) * 100.0;               
+            }
+            else
+            {
+                return -1.0;
+            }
+        }
+
+        /// <summary>
+        /// Computes the Jaccard similarity between two integer arrays.
+        /// </summary>
+        /// <param name="originArray">The first array for comparison.</param>
+        /// <param name="comparingArray">The second array for comparison.</param>
+        /// <returns>
+        /// The Jaccard similarity coefficient between the two arrays, expressed as a percentage.
+        /// Returns -1.0 if either of the input arrays is empty.
+        /// The Jaccard similarity coefficient is computed as:
+        ///     (size of intersection of the arrays / size of union of the arrays) * 100
+        /// </returns>
+        public static double JacardSimilarity(int[] originArray, int[] comparingArray)
+        {
+            if (originArray.Length > 0 && comparingArray.Length > 0)
+            {
                 double similarity = (originArray.Intersect(comparingArray).Count() /
                             (double)originArray.Union(comparingArray).Count()) * 100.0;
                 return similarity;

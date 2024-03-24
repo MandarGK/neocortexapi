@@ -174,7 +174,7 @@ namespace NeoCortexApiExperiment
             // Creating a Dictionary to store SDR values.
             Dictionary<int, List<List<int>>> SdrDictionary = new Dictionary<int, List<List<int>>>();
 
-            // Define a list to store SDRs for the 99th input
+            // Define a list to store SDRs for the nth input
             List<(int CycleNumber, List<int> SDR)> sdrsForInput0 = new List<(int CycleNumber, List<int> SDR)>();
 
             for (int cycle = 0; cycle < maxSPLearningCycles; cycle++)
@@ -195,7 +195,7 @@ namespace NeoCortexApiExperiment
 
                     var actCols = activeColumns.OrderBy(c => c).ToArray();
 
-                    similarity = MathHelpers.CalcArraySimilarity(activeColumns, prevActiveCols[input]);
+                    similarity = MathHelpers.JaccardSimilarity(activeColumns, prevActiveCols[input]);
 
                     // Check if the input key already exists in the dictionary.
                     if (!SdrDictionary.ContainsKey(Convert.ToInt32(input)))
@@ -212,7 +212,7 @@ namespace NeoCortexApiExperiment
                         // Add the current cycle number and SDR for the 0th input to the list
                         sdrsForInput0.Add((cycle, actCols.ToList()));
                     }
-
+                    Console.WriteLine($"[cycle={cycle.ToString("D4")}, StableCycles ={counter}, i={input}, cols={actCols.Length} s={similarity}] SDR: {string.Join(", ", SdrDictionary[Convert.ToInt32(input)].Last())}");
                     Debug.WriteLine($"[cycle={cycle.ToString("D4")}, StableCycles ={counter}, i={input}, cols={actCols.Length} s={similarity}] SDR: {string.Join(", ", SdrDictionary[Convert.ToInt32(input)].Last())}");
                     prevActiveCols[input] = activeColumns;
                     prevSimilarity[input] = similarity;
@@ -271,12 +271,7 @@ namespace NeoCortexApiExperiment
 
                     // Clearing all SDR stored in dictionary during the instable state.
                     SdrDictionary.Clear();
-
-
                     // Setting the counter to reset / 0 during the instable state of spatial pooler.
-
-                    // Setting the counter to reset / 0 during the Instable state of Spatial pooler.
-
                     counter = 0;
                     Debug.WriteLine($"Counter is set to Zero Stability is not yet Reached");
                 }
