@@ -158,7 +158,7 @@ namespace NeoCortexApi
 
                 // If the input has been already seen, we calculate the similarity between already seen input
                 // and the new input. The similarity is calculated as a correlation function.
-                var similarity = JacardSimilarity(ArrayUtils.IndexWhere(m_InOutMap[inpHash], k => k == 1), ArrayUtils.IndexWhere(output, k => k == 1));
+                var similarity = JaccardSimilarity(ArrayUtils.IndexWhere(m_InOutMap[inpHash], k => k == 1), ArrayUtils.IndexWhere(output, k => k == 1));
 
                 // We replace the existing value with the new one.
                 m_InOutMap[inpHash] = output;
@@ -294,7 +294,7 @@ namespace NeoCortexApi
         /// The Jaccard similarity coefficient is computed as:
         ///     (size of intersection of the arrays / size of union of the arrays)
         /// </returns>
-        public static double JacardSimilarity(int[] originArray, int[] comparingArray)
+        public static double JaccardSimilarity(int[] originArray, int[] comparingArray)
         {
             if (originArray.Length > 0 && comparingArray.Length > 0)
             {

@@ -103,7 +103,7 @@ namespace NeoCortexApi.Utility
                         cnt++;
                 }
 
-<<<<<<< HEAD
+
                 return ((double)cnt / (double)Math.Max(originArray.Length, comparingArray.Length)) * 100.0;               
             }
             else
@@ -123,18 +123,14 @@ namespace NeoCortexApi.Utility
         /// The Jaccard similarity coefficient is computed as:
         ///     (size of intersection of the arrays / size of union of the arrays) * 100
         /// </returns>
-        public static double JacardSimilarity(int[] originArray, int[] comparingArray)
+        public static double JaccardSimilarity(int[] originArray, int[] comparingArray)
         {
             if (originArray.Length > 0 && comparingArray.Length > 0)
             {
                 double similarity = (originArray.Intersect(comparingArray).Count() /
                             (double)originArray.Union(comparingArray).Count()) * 100.0;
                 return similarity;
-=======
-                return ((double)cnt / (double)Math.Max(originArray.Length, comparingArray.Length)) * 100.0;
-                
-                
->>>>>>> bef1944489570b3eebeffdac3024b7601603a3d0
+
             }
             else
             {
