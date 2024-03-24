@@ -39,5 +39,21 @@ namespace UnitTestsProject.SimilarityUnitTests
             Console.WriteLine();
 
         }
+
+        [DataRow(new int[] { 1, 2, 3 }, new int[] { 1, 2, 3 }, true)]
+        [DataRow(new int[] { 1, 2, 3 }, new int[] { 1, 2, 4 }, false)]
+        [DataRow(new int[] { 1, 2, 3 }, null, false)]
+        [DataRow(null, new int[] { 1, 2, 3 }, false)]
+        [DataRow(null, null, false)]
+        [TestMethod]
+        [TestCategory("Prod")]
+        public void TestAreArraysEqual(int[] arr1, int[] arr2, bool expectedResult)
+        {
+            bool result = MathHelpers.AreArraysEqual(arr1, arr2);
+
+            Assert.AreEqual(expectedResult, result);
+        }
+
+
     }
 }
