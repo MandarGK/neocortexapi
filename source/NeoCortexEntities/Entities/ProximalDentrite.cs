@@ -114,12 +114,47 @@ namespace NeoCortexApi.Entities
 
                 if (perms[i] >= permConnThreshold)
                 {
-                    //connectedCounts.set(1, 0 /*ParentColumnIndex*/, i);
-                    connectedCounts.set(1, 0 /*ParentColumnIndex*/, inputIndexes[i]);
+                    connectedCounts.set(1, 0 /*ParentColumnIndex*/, i);
                 }
             }
 
         }
+        /// <summary>
+        /// Sets the updated permanences for synapses in a region's receptive field based on input indexes.
+        /// </summary>
+        /// <param name="connectedCounts">The matrix storing the counts of connected synapses.</param>
+        /// <param name="htmConfig">The configuration settings for the HTM.</param>
+        /// <param name="perms">An array of permanence values for the synapses.</param>
+        /// <param name="inputIndexes">An array of indexes representing inputs.</param>
+        public void SetUpdatedPermanences(AbstractSparseBinaryMatrix connectedCounts, HtmConfig htmConfig, double[] perms, int[] inputIndexes)
+        {
+            // Retrieve the synaptic permanence threshold from the HTM configuration
+            var permConnThreshold = htmConfig.SynPermConnected;
+
+            // Reset connections in the RF (Receptive Field) pool
+            RFPool.ResetConnections();
+
+            // Clear statistics of connected counts
+            connectedCounts.ClearStatistics(0 /*this.ParentColumnIndex*/);
+
+            // Iterate through the input indexes
+            for (int i = 0; i < inputIndexes.Length; i++)
+            {
+                // Get the synapse associated with the current input index
+                var synapse = RFPool.GetSynapseForInput(inputIndexes[i]);
+
+                // Set the permanence of the synapse to the corresponding value from the 'perms' array
+                synapse.Permanence = perms[i];
+
+                // Check if the permanence value meets or exceeds the threshold for connection
+                if (perms[i] >= permConnThreshold)
+                {
+                    // If the permanence exceeds the threshold, mark the connection as active
+                    connectedCounts.set(1, 0 /*ParentColumnIndex*/, inputIndexes[i]);
+                }
+            }
+        }
+
 
         /// <summary>
         /// Returns an array of synapse indexes as a dense binary array.
