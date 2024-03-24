@@ -103,6 +103,7 @@ namespace NeoCortexApi.Utility
                         cnt++;
                 }
 
+<<<<<<< HEAD
                 return ((double)cnt / (double)Math.Max(originArray.Length, comparingArray.Length)) * 100.0;               
             }
             else
@@ -129,6 +130,11 @@ namespace NeoCortexApi.Utility
                 double similarity = (originArray.Intersect(comparingArray).Count() /
                             (double)originArray.Union(comparingArray).Count()) * 100.0;
                 return similarity;
+=======
+                return ((double)cnt / (double)Math.Max(originArray.Length, comparingArray.Length)) * 100.0;
+                
+                
+>>>>>>> bef1944489570b3eebeffdac3024b7601603a3d0
             }
             else
             {
@@ -195,6 +201,30 @@ namespace NeoCortexApi.Utility
 
             return fact;
         }
+
+        /// <summary>
+        /// Checks if two arrays are equal.
+        /// </summary>
+        /// <typeparam name="T">The type of elements in the arrays.</typeparam>
+        /// <param name="arr1">The first array to compare.</param>
+        /// <param name="arr2">The second array to compare.</param>
+        /// <returns>True if the arrays are equal; otherwise, false.</returns>
+        public static bool AreArraysEqual<T>(T[] arr1, T[] arr2)
+        {
+            // Check if the arrays are null or have different lengths
+            if (arr1 == null || arr2 == null || arr1.Length != arr2.Length)
+                return false;
+
+            // Check each element for equality
+            for (int i = 0; i < arr1.Length; i++)
+            {
+                if (!arr1[i].Equals(arr2[i]))
+                    return false;
+            }
+
+            return true;
+        }
+
     }
 }
 
