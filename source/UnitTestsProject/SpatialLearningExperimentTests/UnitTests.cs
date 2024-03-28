@@ -12,7 +12,7 @@ using System.Drawing;
 using System.Linq;
 using NeoCortexApi;
 
-namespace UnitTestsProject.SimilarityUnitTests
+namespace UnitTestsProject
 {
     /// <summary>
     /// Test for similarity calculation.
