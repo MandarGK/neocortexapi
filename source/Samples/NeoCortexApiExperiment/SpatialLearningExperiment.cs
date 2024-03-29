@@ -170,7 +170,9 @@ namespace NeoCortexApiExperiment
             int maxSPLearningCycles = 1000;
 
             //Intializing counter to break the loop after reaching stability
-            int counter = 0;
+            int stableCycleElapsed = 0;
+
+            int loopBreakerThreshold = 100;
 
             // Creating a Dictionary to store SDR values.
             Dictionary<int, List<List<int>>> SdrDictionary = new Dictionary<int, List<List<int>>>();
@@ -179,7 +181,7 @@ namespace NeoCortexApiExperiment
             List<(int Cycle, double Similarity, int[] ActCols,List<int> SDR )> sdrsForInput0 = new List<(int Cycle, double Similarity, int[] ActCols, List<int> SDR)>();
 
             // Define a dictionary to track stability for each input
-            Dictionary<int, int> stableCycles = new Dictionary<int, int>();
+            Dictionary<int, int> stableIterationCount = new Dictionary<int, int>();
 
             for (int cycle = 0; cycle < maxSPLearningCycles; cycle++)
             {
@@ -213,11 +215,11 @@ namespace NeoCortexApiExperiment
 
                     if (Convert.ToInt32(input) <= 99 && MathHelpers.AreArraysEqual(activeColumns, prevActiveCols[input]))
                     {
-                        stableCycles[Convert.ToInt32(input)]++; // Increment stable cycles count
+                        stableIterationCount[Convert.ToInt32(input)]++; // Increment stable cycles count
                     }
                     else
                     {
-                        stableCycles[Convert.ToInt32(input)] = 0; // Reset stable cycles count
+                        stableIterationCount[Convert.ToInt32(input)] = 0; // Reset stable cycles count
                     }
 
                     if (Convert.ToInt32(input) == 0) // Check if the input is the 0th input
@@ -226,7 +228,7 @@ namespace NeoCortexApiExperiment
                         sdrsForInput0.Add((cycle, similarity, actCols, actCols.ToList()));
                     }
 
-                    Debug.WriteLine($"[cycle={cycle.ToString("D4")}, N={stableCycles[Convert.ToInt32(input)]} , stablecycles ={counter}, i={input}, cols={actCols.Length} s={similarity}] SDR: {string.Join(", ", SdrDictionary[Convert.ToInt32(input)].Last())}");
+                    Debug.WriteLine($"[cycle={cycle.ToString("D4")}, N={stableIterationCount[Convert.ToInt32(input)]} , stablecycles ={stableCycleElapsed}, i={input}, cols={actCols.Length} s={similarity}] SDR: {string.Join(", ", SdrDictionary[Convert.ToInt32(input)].Last())}");
                     prevActiveCols[input] = activeColumns;
                     prevSimilarity[input] = similarity;
 
@@ -240,10 +242,10 @@ namespace NeoCortexApiExperiment
                 {
 
                     // Incrementing the Counter to get the desire value to print the SDR for 100 Stable Cycles 
-                    counter++;
+                    stableCycleElapsed++;
 
 
-                    if (counter == inputs.Length)
+                    if (stableCycleElapsed == loopBreakerThreshold)
                     {
                         
                         // Print the last 100 stable cycles.
@@ -268,8 +270,8 @@ namespace NeoCortexApiExperiment
 
                     // Clearing all SDR stored in dictionary during the instable state.
                     SdrDictionary.Clear();
-                    // Setting the counter to reset / 0 during the Instable state of Spatial pooler.
-                    counter = 0;
+                    // Setting the stableCycleElapsed to reset / 0 during the Instable state of Spatial pooler.
+                    stableCycleElapsed = 0;
                     Debug.WriteLine($"Counter is set to zero; stability is not yet reached");
                 }
 
