@@ -170,7 +170,7 @@ The Spatial Pooler's output for input index 0 at cycle 544  and the resulting Sp
 ```
 [cycle=0544, N=503 , stablecycles =99, i=0, cols=20, s=100] SDR: 7, 24, 29, 43, 46, 59, 62, 70, 102, 112, 114, 116, 118, 146, 148, 154, 155, 953, 960, 1012
 ```
-Breakdown of the output represenattion:
+Breakdown of the output representation:
 
 **cycle=0544**: This indicates the cycle number, where the current cycle is 544.   
 
@@ -180,7 +180,7 @@ Breakdown of the output represenattion:
 
 **i=0**: This indicates the input and iteration number within the current cycle, which is 0.
 
-**cols=20**: This signifies the total number of mini-columns that are active in the curret iteration.
+**cols=20**: This signifies the total number of mini-columns that are active in the current iteration.
 
 **s=100**: This represents the similarity between the SDR of the current cycle and the SDR of the previous cycle for the input. A value of 100 indicates a perfect match between the two representations, while lower values indicate less similarity.
 
