@@ -3,8 +3,8 @@
 ### This project implements a new Spatial Learning experiment using the NeoCortexApi. The experiment utilizes the Spatial Pooler (SP) algorithm to learn and predict spatial patterns of binary input vector using C#.
 
 ## Overview
-* [Problem Statement](#problem-statement)
 * [Getting Started](#getting-started)
+* [Problem Statement](#problem-statement)
 * [Introduction](#introduction)
 * [Encoder](#encoder)
 * [HTM Spatial Pooler](#htm-spatial-pooler)
