@@ -3,7 +3,6 @@
 ### This project implements a new Spatial Learning experiment using the NeoCortexApi. The experiment utilizes the Spatial Pooler (SP) algorithm to learn and predict spatial patterns of binary input vector using C#.
 
 ## Overview
-* [Contributors](#contributors)
 * [Problem Statement](#problem-statement)
 * [Getting Started](#getting-started)
 * [Introduction](#introduction)
@@ -12,14 +11,6 @@
 * [Homeostatic Plasticity Controller](#homeostatic-plasticity-controller)
 * [Experiment Execution](#experiment-execution)
 * [Result Visualization](#result-visualization)
-
-  
-## Contributors:
-
-This project is created by the joint efforts of
-* [Mandar Kale](https://github.com/MandarGK)
-* [Anushruthpal Keshavathi Jayapal](https://github.com/Anushruth16)
-* [Lavanya suresh](https://github.com/LavanyaSuresh23)
 
 ## Getting Started:
 
