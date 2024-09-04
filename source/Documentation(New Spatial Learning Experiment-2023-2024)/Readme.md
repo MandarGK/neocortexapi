@@ -207,3 +207,26 @@ The Figure 2 Represents the stability trend over 1000 cycles, with the stable st
   <em>Figure 2: <i>Stability trends over 1000 cycles with Stable State reached at cycle 445 and constant behavior thereafter..</i></em>
 </p>
 
+### Improved Output Visualization and Analysis
+To better understand the behavior of individual input patterns, an additional parameter, "N", was introduced, representing the number of iterations during which the SDR for an input remained stable. This parameter provides deeper insights into how the SP processes input data over time, showcasing its ability to generate stable and informative representations through the sparse activation of mini-columns.
+
+
+Upon reaching stability, the following 100 stable cycles are [printed](https://github.com/MandarGK/neocortexapi/blob/TheLazyCoders/source/MySEProject/Documentation/Stablecycles.txt). Also, the SDRs for input 0 from the initial cycle to the last one are [displayed](https://github.com/MandarGK/neocortexapi/blob/TheLazyCoders/source/MySEProject/Documentation/ComparisonofSDR.txt) for visual comparison, allowing for analysis and providing deeper insights into the stability of the SP.
+
+  
+  <p align="center">
+  <img src="image-1.png">
+  <br>
+  <em>Figure 3: <i>Representation of SDRs for all inputs at cycle 0 (left) and last stable cycle 544 (right) The horizontal axis shows the index of the input. The vertical axis shows the SDR. Every blue dot represents the active mini column.</i></em>
+</p>
+  Figure 3 contrasts the SDRs at cycle 0 (left) and the last stable cycle 544 (right). Initially, SDRs were less active, reflecting the early learning phase. However, as the process progressed, the SDRs became more active, indicating that the system had effectively learned and adapted to the input data, leading to more robust and refined representations.
+
+
+ 
+
+ ## Conclusion
+
+The new Spatial Learning experiment enhances the previous Spatial Pattern Learning Experiment by improving efficiency and accuracy. By transitioning from a fixed 1000-cycle methodology to a dynamic approach that terminates once stability is confirmed, computational resources are conserved, saving valuable time. The indexing issue that slowed down activation in the learning phase was successfully resolved, resulting in a more effective system. Key parameters like numOfCyclesToWaitOnChange, MinPctOverlapDutyCycles and MaxBoost  were fine-tuned to maintain long-term stability, and the output clearly demonstrates these improvements. Overall, The New Spatial Learning experiment significantly advances the efficiency and effectiveness of the earlier version of the experiment.
+
+ *[Go to top &uarr;](#overview)*
+
