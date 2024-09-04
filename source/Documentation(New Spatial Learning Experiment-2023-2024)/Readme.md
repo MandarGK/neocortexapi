@@ -192,3 +192,18 @@ To address this, a new method called `SetUpdatedPermanences` was implemented. Th
   <em>Figure 1: <i>Representation of SDRs generated for only input 0 to 50 due to incorrect indexing (left) and SDRs generated for input 0 to 99 with proper indexing (right). The horizontal axis shows the index of the input. The vertical axis shows the SDR. Every blue dot represents the active mini column.</i></em>
 </p>
 
+### Ensuring Consistent Stability
+Stability in the SDRs is crucial for the reliable performance of the Spatial Pooler. The experiment demonstrated that once the SP system achieves a stable state, no further changes are observed in the SDRs, ensuring consistent and reliable output.
+
+The system’s stability was monitored using a variable ⁠ isInStableState ⁠. The experiment was designed to terminate after confirming that SDRs remained unchanged for a specified number of iterations (100 cycles in this case), ensuring that the system had indeed reached a stable state.
+
+Once stability is detected, the experiment continues for 100 additional cycles, tracked by a counter called `StableCyclesElapsed`. This counter increments if the system remains stable and resets if it becomes unstable. If the counter reaches the `LoopBreakerThreshold` (set to 100 cycles), the experiment exits, confirming stability.
+
+The Figure 2 Represents the stability trend over 1000 cycles, with the stable state being reached at cycle 445. From this point onwards, the system maintains a constant behavior, validating the effectiveness of the solution in achieving stability.
+
+<p align="center">
+  <img src="image.png">
+  <br>
+  <em>Figure 2: <i>Stability trends over 1000 cycles with Stable State reached at cycle 445 and constant behavior thereafter..</i></em>
+</p>
+
