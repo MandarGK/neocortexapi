@@ -11,6 +11,7 @@
 * [Homeostatic Plasticity Controller](#homeostatic-plasticity-controller)
 * [Experiment Execution](#experiment-execution)
 * [Result Visualization](#result-visualization)
+* [Conclusion](#conclusion)
 
 ## Getting Started:
 
@@ -179,5 +180,15 @@ Breakdown of the output representation:
 
 
 
- **[Go to top &uarr;](#overview)**
+
+### Addressing Slow Activation of Mini-Columns
+The spatial learning experiment revealed an initial challenge where the Spatial Pooler (SP) struggled to generate accurate Sparse Distributed Representations (SDRs) for inputs above a certain threshold. This issue was traced back to an indexing problem within the SP algorithm, particularly affecting mini-columns associated with inputs greater than 50. These mini-columns failed to activate, leading to an absence of overlaps in the SDRs, which impaired the learning process.
+
+To address this, a new method called `SetUpdatedPermanences` was implemented. This method corrected the indexing issue, enabling the SP to properly activate mini-columns based on the input patterns. As a result, the SP now successfully generates SDRs for the entire range of inputs during the learning phase, including those exceeding 50 as depicted in Figure 1.
+
+<p align="center">
+  <img src="image-2.png">
+  <br>
+  <em>Figure 1: <i>Representation of SDRs generated for only input 0 to 50 due to incorrect indexing (left) and SDRs generated for input 0 to 99 with proper indexing (right). The horizontal axis shows the index of the input. The vertical axis shows the SDR. Every blue dot represents the active mini column.</i></em>
+</p>
 
